@@ -17,7 +17,7 @@ export declare function createMicrosoftGraphClient(teamsfx: TeamsFxConfiguration
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  teamsfx | TeamsFxConfiguration | Used to provide configuration and auth. |
-|  scopes | string \| string\[\] | The array of Microsoft Token scope of access. Default value is <code>[.default]</code>. |
+|  scopes | string \| string\[\] | <i>(Optional)</i> The array of Microsoft Token scope of access. Default value is <code>[.default]</code>. |
 
 <b>Returns:</b>
 

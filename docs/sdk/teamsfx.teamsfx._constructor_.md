@@ -16,8 +16,8 @@ constructor(identityType?: IdentityType, customConfig?: Record<string, string>);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  identityType | [IdentityType](./teamsfx.identitytype.md) | Choose user or app identity |
-|  customConfig | Record&lt;string, string&gt; | key/value pairs of customized configuration that overrides default ones. |
+|  identityType | [IdentityType](./teamsfx.identitytype.md) | <i>(Optional)</i> Choose user or app identity |
+|  customConfig | Record&lt;string, string&gt; | <i>(Optional)</i> key/value pairs of customized configuration that overrides default ones. |
 
 ## Exceptions
 

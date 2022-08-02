@@ -6,12 +6,12 @@
   "types": "types/index.d.ts",
   "scripts": {
     "clean": "rimraf lib types",
-    "clean-build": "npm run clean && npm run build",
+    "clean-build": "pnpm run clean && pnpm run build",
     "build": "rollup -c",
     "lint": "eslint \"**/*.ts\"",
     "lint:staged": "lint-staged",
-    "check-sensitive": "npx eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
-    "precommit": "npm run check-sensitive && lint-staged",
+    "check-sensitive": "pnpm eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
+    "precommit": "pnpm run check-sensitive && lint-staged",
     "format": "prettier --write --config ./.prettierrc.js --ignore-path ./.prettierignore \"src/**/*.ts\" \"*.{js,json}\""
   },
   "repository": "https://github.com/OfficeDev/TeamsFx",
@@ -59,7 +59,7 @@
   ],
   "lint-staged": {
     "*.{js,jsx,css,ts,tsx}": [
-      "npx eslint --cache --fix --quiet"
+      "pnpm eslint --cache --fix --quiet"
     ]
   }
 }

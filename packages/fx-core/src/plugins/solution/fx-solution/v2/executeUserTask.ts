@@ -1192,7 +1192,7 @@ export async function createAuthFiles(
     const e = new SystemError(
       SolutionSource,
       SolutionError.FailedToCreateAuthFiles,
-      getLocalizedString("core.addSsoFiles.FailedToCreateAuthFiles", error.message)
+      getLocalizedString("core.addSsoFiles.FailedToCreateAuthFiles", (error as Error).message)
     );
     return err(e);
   }

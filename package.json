@@ -1,18 +1,33 @@
 {
   "name": "teamsfx",
+  "workspaces": [
+    "packages/api",
+    "packages/fx-core",
+    "packages/sdk",
+    "packages/sdk-react",
+    "packages/cli",
+    "packages/server",
+    "packages/vscode-extension",
+    "packages/failpoint-ts",
+    "packages/metrics-ts",
+    "packages/adaptivecards-tools-sdk",
+    "packages/manifest",
+    "packages/eslint-config",
+    "templates"
+  ],
   "scripts": {
-    "setup": "npm install && npm run build",
-    "setup-failpoint": "npm run setup && npx lerna run build-failpoint",
-    "setup-metrics": "npm run setup && npx lerna run build-metrics && npm run setup",
-    "bootstrap": "lerna bootstrap",
-    "lint:staged": "lerna run lint:staged --stream",
-    "lint": "lerna run lint --stream",
-    "manual-version:rc": "lerna version --preid=rc --no-push --no-changelog",
+    "setup": "pnpm install && pnpm run build",
+    "setup-failpoint": "pnpm run setup && pnpm lerna run build-failpoint",
+    "setup-metrics": "pnpm run setup && pnpm lerna run build-metrics && pnpm run setup",
+    "bootstrap": "pnpm lerna bootstrap",
+    "lint:staged": "pnpm lerna run lint:staged --stream",
+    "lint": "pnpm lerna run lint --stream",
+    "manual-version:rc": "pnpm lerna version --preid=rc --no-push --no-changelog",
     "prepare": "husky install",
     "precommit": "lint-staged",
-    "postinstall": "npm run bootstrap --hoist",
-    "build": "lerna run build",
-    "clean": "lerna clean"
+    "postinstall": "pnpm run bootstrap --hoist",
+    "build": "pnpm lerna run build",
+    "clean": "pnpm lerna clean"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -25,10 +40,22 @@
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "@microsoft/adaptivecards-tools": "workspace:*",
+    "@microsoft/teamsfx-api": "workspace:*",
+    "@microsoft/teamsfx-cli": "workspace:*",
+    "@microsoft/failpoint-ts": "workspace:*",
+    "@microsoft/teamsfx-core": "workspace:*",
+    "@microsoft/teamsfx": "workspace:*",
+    "@microsoft/teamsfx-react": "workspace:*",
+    "ms-teams-vscode-extension": "workspace:*"
   },
   "bin": {
     "teamsfx": "./packages/cli/cli.js"
   },
-  "dependencies": {}
+  "engines": {
+    "node": ">=12.22.0",
+    "pnpm": ">= 7.2.1"
+  },
+  "packageManager": "pnpm@7.3.0"
 }

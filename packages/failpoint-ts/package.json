@@ -16,12 +16,12 @@
     "url": "git+https://github.com/OfficeDev/TeamsFx.git"
   },
   "scripts": {
-    "test": "npm run test:unit",
-    "test:unit": "npx nyc mocha --no-timeouts --require ts-node/register test/**/*.test.ts ",
-    "build": "rimraf build && npx tsc -p ./",
+    "test": "pnpm run test:unit",
+    "test:unit": "pnpm nyc mocha --no-timeouts --require ts-node/register test/**/*.test.ts ",
+    "build": "rimraf build && pnpm tsc -p ./",
     "format-check": "echo test",
-    "check-sensitive": "npx eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
-    "precommit": "npm run check-sensitive && lint-staged",
+    "check-sensitive": "pnpm eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
+    "precommit": "pnpm run check-sensitive && lint-staged",
     "lint": "eslint \"**/*.ts\"",
     "lint:staged": "lint-staged"
   },
@@ -29,6 +29,7 @@
     "url": "https://github.com/OfficeDev/TeamsFx/issues"
   },
   "devDependencies": {
+    "rimraf": "^3.0.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.21",
     "@types/mocha": "^8.2.3",
@@ -52,7 +53,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,css,ts,tsx}": [
-      "npx eslint --cache --fix --quiet"
+      "pnpm eslint --cache --fix --quiet"
     ]
   }
 }

@@ -58,7 +58,7 @@ async function _loadEnvFile(envPath: string): Promise<RemoteEnvs> {
   const envs = dotenv.parse(await fs.readFile(envPath));
   const entries = Object.entries(envs);
   for (const [key, value] of entries) {
-    if (Object.values(EnvKeys).includes(key)) {
+    if ((Object.values(EnvKeys) as string[]).includes(key)) {
       result.teamsfxRemoteEnvs[key] = value;
     } else {
       result.customizedRemoteEnvs[key] = value;

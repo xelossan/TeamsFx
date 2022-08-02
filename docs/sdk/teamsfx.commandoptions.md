@@ -14,7 +14,7 @@ export interface CommandOptions
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [commands?](./teamsfx.commandoptions.commands.md) | [TeamsFxBotCommandHandler](./teamsfx.teamsfxbotcommandhandler.md)<!-- -->\[\] | <i>(Optional)</i> The commands to registered with the command bot. Each command should implement the interface [TeamsFxBotCommandHandler](./teamsfx.teamsfxbotcommandhandler.md) so that it can be correctly handled by this command bot. |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [commands?](./teamsfx.commandoptions.commands.md) |  | [TeamsFxBotCommandHandler](./teamsfx.teamsfxbotcommandhandler.md)<!-- -->\[\] | <i>(Optional)</i> The commands to registered with the command bot. Each command should implement the interface [TeamsFxBotCommandHandler](./teamsfx.teamsfxbotcommandhandler.md) so that it can be correctly handled by this command bot. |
 

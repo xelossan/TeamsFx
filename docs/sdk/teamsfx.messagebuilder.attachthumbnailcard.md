@@ -15,9 +15,9 @@ static attachThumbnailCard(title: string, images?: (CardImage | string)[], butto
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  title | string | The card title. |
-|  images | (CardImage \| string)\[\] | Optional. The array of images to include on the card. |
-|  buttons | (CardAction \| string)\[\] | Optional. The array of buttons to include on the card. Each <code>string</code> in the array is converted to an <code>imBack</code> button with a title and value set to the value of the string. |
-|  other | Partial&lt;ThumbnailCard&gt; | Optional. Any additional properties to include on the card. |
+|  images | (CardImage \| string)\[\] | <i>(Optional)</i> Optional. The array of images to include on the card. |
+|  buttons | (CardAction \| string)\[\] | <i>(Optional)</i> Optional. The array of buttons to include on the card. Each <code>string</code> in the array is converted to an <code>imBack</code> button with a title and value set to the value of the string. |
+|  other | Partial&lt;ThumbnailCard&gt; | <i>(Optional)</i> Optional. Any additional properties to include on the card. |
 
 <b>Returns:</b>
 

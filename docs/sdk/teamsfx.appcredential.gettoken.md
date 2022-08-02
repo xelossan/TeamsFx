@@ -17,7 +17,7 @@ getToken(scopes: string | string[], options?: GetTokenOptions): Promise<AccessTo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scopes | string \| string\[\] | The list of scopes for which the token will have access. |
-|  options | GetTokenOptions | The options used to configure any requests this TokenCredential implementation might make. |
+|  options | GetTokenOptions | <i>(Optional)</i> The options used to configure any requests this TokenCredential implementation might make. |
 
 <b>Returns:</b>
 

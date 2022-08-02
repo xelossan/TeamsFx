@@ -27,9 +27,9 @@ It's recommended to get members from .
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [account](./teamsfx.member.account.md) |  | TeamsChannelAccount | Detailed member account information. |
-|  [parent](./teamsfx.member.parent.md) |  | [TeamsBotInstallation](./teamsfx.teamsbotinstallation.md) | The parent [TeamsBotInstallation](./teamsfx.teamsbotinstallation.md) where this member is created from. |
-|  [type](./teamsfx.member.type.md) |  | [NotificationTargetType](./teamsfx.notificationtargettype.md) | Notification target type. For member it's always "Person". |
+|  [account](./teamsfx.member.account.md) | <code>readonly</code> | TeamsChannelAccount | Detailed member account information. |
+|  [parent](./teamsfx.member.parent.md) | <code>readonly</code> | [TeamsBotInstallation](./teamsfx.teamsbotinstallation.md) | The parent [TeamsBotInstallation](./teamsfx.teamsbotinstallation.md) where this member is created from. |
+|  [type](./teamsfx.member.type.md) | <code>readonly</code> | [NotificationTargetType](./teamsfx.notificationtargettype.md) | Notification target type. For member it's always "Person". |
 
 ## Methods
 

@@ -17,7 +17,7 @@ getToken(scopes: string | string[], options?: GetTokenOptions): Promise<AccessTo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scopes | string \| string\[\] |  |
-|  options | GetTokenOptions |  |
+|  options | GetTokenOptions | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

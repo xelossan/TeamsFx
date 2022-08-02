@@ -16,7 +16,7 @@ export declare function setLogFunction(logFunction?: LogFunction): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  logFunction | [LogFunction](./teamsfx.logfunction.md) | custom log function. If it's undefined, custom log function will be cleared. |
+|  logFunction | [LogFunction](./teamsfx.logfunction.md) | <i>(Optional)</i> custom log function. If it's undefined, custom log function will be cleared. |
 
 <b>Returns:</b>
 

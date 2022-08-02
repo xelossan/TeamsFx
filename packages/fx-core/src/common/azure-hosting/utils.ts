@@ -52,14 +52,14 @@ export function mergeTemplates(templates: ArmTemplateResult[]): ArmTemplateResul
           Orchestration: templates.map((template) => template.Provision?.Orchestration).join(""),
           Modules: templates
             .map((template) => template.Provision?.Modules)
-            .reduce((result, current) => Object.assign(result, current), {}),
+            .reduce((result, current) => Object.assign(result!, current), {}),
         }
       : undefined,
     Configuration: {
       Orchestration: templates.map((template) => template.Configuration?.Orchestration).join(""),
       Modules: templates
         .map((template) => template.Configuration?.Modules)
-        .reduce((result, current) => Object.assign(result, current), {}),
+        .reduce((result, current) => Object.assign(result!, current), {}),
     },
     Parameters: existsParameters
       ? Object.assign({}, ...templates.map((template) => template.Parameters))

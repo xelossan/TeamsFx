@@ -16,6 +16,6 @@ constructor(message?: string, code?: ErrorCode);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  message | string | error message. |
-|  code | [ErrorCode](./teamsfx.errorcode.md) | error code. |
+|  message | string | <i>(Optional)</i> error message. |
+|  code | [ErrorCode](./teamsfx.errorcode.md) | <i>(Optional)</i> error code. |
 

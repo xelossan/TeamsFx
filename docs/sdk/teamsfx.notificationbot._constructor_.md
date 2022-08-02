@@ -17,7 +17,7 @@ constructor(adapter: BotFrameworkAdapter, options?: NotificationOptions);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  adapter | BotFrameworkAdapter | the bound <code>BotFrameworkAdapter</code> |
-|  options | NotificationOptions | initialize options |
+|  options | NotificationOptions | <i>(Optional)</i> initialize options |
 
 ## Remarks
 

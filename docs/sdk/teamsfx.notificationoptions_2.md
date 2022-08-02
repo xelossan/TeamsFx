@@ -14,7 +14,7 @@ export interface NotificationOptions
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [storage?](./teamsfx.notificationoptions_2.storage.md) | [NotificationTargetStorage](./teamsfx.notificationtargetstorage.md) | <i>(Optional)</i> An optional storage to persist bot notification connections. |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [storage?](./teamsfx.notificationoptions_2.storage.md) |  | [NotificationTargetStorage](./teamsfx.notificationtargetstorage.md) | <i>(Optional)</i> An optional storage to persist bot notification connections. |
 

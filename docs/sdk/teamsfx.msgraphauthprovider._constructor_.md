@@ -17,7 +17,7 @@ constructor(teamsfx: TeamsFxConfiguration, scopes?: string | string[]);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  teamsfx | TeamsFxConfiguration | Used to provide configuration and auth. |
-|  scopes | string \| string\[\] | The list of scopes for which the token will have access. |
+|  scopes | string \| string\[\] | <i>(Optional)</i> The list of scopes for which the token will have access. |
 
 ## Exceptions
 

@@ -19,7 +19,7 @@ export declare function createPfxCertOption(pfx: string | Buffer, options?: {
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  pfx | string \| Buffer | The content of .pfx file |
-|  options | { passphrase?: string; } | Optional settings when create the cert options. |
+|  options | { passphrase?: string; } | <i>(Optional)</i> Optional settings when create the cert options. |
 
 <b>Returns:</b>
 

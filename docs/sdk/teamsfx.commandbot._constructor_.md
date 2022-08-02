@@ -17,5 +17,5 @@ constructor(adapter: BotFrameworkAdapter, options?: CommandOptions);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  adapter | BotFrameworkAdapter | The bound <code>BotFrameworkAdapter</code>. |
-|  options | [CommandOptions](./teamsfx.commandoptions.md) | initialize options |
+|  options | [CommandOptions](./teamsfx.commandoptions.md) | <i>(Optional)</i> initialize options |
 

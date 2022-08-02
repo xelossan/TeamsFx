@@ -14,10 +14,10 @@ export interface UserInfo
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [displayName](./teamsfx.userinfo.displayname.md) | string | User Display Name. |
-|  [objectId](./teamsfx.userinfo.objectid.md) | string | User unique reference within the Azure Active Directory domain. |
-|  [preferredUserName](./teamsfx.userinfo.preferredusername.md) | string | Usually be the email address. |
-|  [tenantId](./teamsfx.userinfo.tenantid.md) | string | User tenant ID. |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [displayName](./teamsfx.userinfo.displayname.md) | <code>readonly</code> | string | User Display Name. |
+|  [objectId](./teamsfx.userinfo.objectid.md) | <code>readonly</code> | string | User unique reference within the Azure Active Directory domain. |
+|  [preferredUserName](./teamsfx.userinfo.preferredusername.md) | <code>readonly</code> | string | Usually be the email address. |
+|  [tenantId](./teamsfx.userinfo.tenantid.md) | <code>readonly</code> | string | User tenant ID. |
 

@@ -16,7 +16,7 @@ export declare function setLogger(logger?: Logger): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  logger | [Logger](./teamsfx.logger.md) | custom logger. If it's undefined, custom logger will be cleared. |
+|  logger | [Logger](./teamsfx.logger.md) | <i>(Optional)</i> custom logger. If it's undefined, custom logger will be cleared. |
 
 <b>Returns:</b>
 

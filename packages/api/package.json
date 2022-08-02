@@ -16,16 +16,16 @@
   "scripts": {
     "lint:staged": "lint-staged",
     "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "prebuild": "npx json2ts --input src/schemas/envConfig.json --output src/schemas/envConfig.ts",
-    "build": "tsc -p ./ && npx api-extractor run --local",
-    "build:api-markdown": "npm run build && rimraf ../../docs/api && npx api-documenter markdown -i temp -o ../../docs/api",
-    "postbuild": "npx copyfiles src/schemas/*.json build/schemas/",
+    "prebuild": "pnpm json2ts --input src/schemas/envConfig.json --output src/schemas/envConfig.ts",
+    "build": "tsc -p ./ && pnpm api-extractor run --local --verbose",
+    "build:api-markdown": "pnpm run build && rimraf ../../docs/api && pnpm api-documenter markdown -i temp -o ../../docs/api",
+    "postbuild": "pnpm copyfiles src/schemas/*.json build/schemas/",
     "lint:fix": "eslint \"src/**/*.ts\" \"tests/**/*.ts\" --fix",
     "doc": "typedoc",
     "test:unit": "nyc --no-clean mocha --no-timeouts --require ts-node/register \"tests/**/*.ts\" ",
-    "prepublishOnly": "npm run test:unit && npm run build",
-    "check-sensitive": "npx eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
-    "precommit": "npm run check-sensitive && lint-staged"
+    "prepublishOnly": "pnpm run test:unit && pnpm run build",
+    "check-sensitive": "pnpm eslint --plugin 'no-secrets' --cache --ignore-pattern 'package.json' --ignore-pattern 'package-lock.json'",
+    "precommit": "pnpm run check-sensitive && lint-staged"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -55,7 +55,8 @@
     "source-map-support": "^0.5.19",
     "ts-node": "^9.1.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "rimraf": "^3.0.0"
   },
   "dependencies": {
     "@azure/core-http": "^1.2.2",
@@ -64,6 +65,7 @@
     "@types/fs-extra": "^9.0.10",
     "axios": "^0.21.2",
     "chai": "^4.3.4",
+    "tslib": "^2.3.1",
     "jsonschema": "^1.4.0",
     "neverthrow": "^3.2.0"
   },
@@ -73,7 +75,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,css,ts,tsx}": [
-      "npx eslint --cache --fix --quiet"
+      "pnpm eslint --cache --fix --quiet"
     ]
   }
 }

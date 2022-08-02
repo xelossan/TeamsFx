@@ -27,9 +27,9 @@ It's recommended to get bot installations from .
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [adapter](./teamsfx.teamsbotinstallation.adapter.md) |  | BotFrameworkAdapter | The bound <code>BotFrameworkAdapter</code>. |
-|  [conversationReference](./teamsfx.teamsbotinstallation.conversationreference.md) |  | Partial&lt;ConversationReference&gt; | The bound <code>ConversationReference</code>. |
-|  [type?](./teamsfx.teamsbotinstallation.type.md) |  | [NotificationTargetType](./teamsfx.notificationtargettype.md) | <i>(Optional)</i> Notification target type. |
+|  [adapter](./teamsfx.teamsbotinstallation.adapter.md) | <code>readonly</code> | BotFrameworkAdapter | The bound <code>BotFrameworkAdapter</code>. |
+|  [conversationReference](./teamsfx.teamsbotinstallation.conversationreference.md) | <code>readonly</code> | Partial&lt;ConversationReference&gt; | The bound <code>ConversationReference</code>. |
+|  [type?](./teamsfx.teamsbotinstallation.type.md) | <code>readonly</code> | [NotificationTargetType](./teamsfx.notificationtargettype.md) | <i>(Optional)</i> Notification target type. |
 
 ## Methods
 

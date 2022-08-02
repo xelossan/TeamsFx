@@ -69,9 +69,9 @@ for (const target of await conversationBot.notification.installations()) {
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [adapter](./teamsfx.conversationbot.adapter.md) |  | BotFrameworkAdapter | The bot adapter. |
-|  [command?](./teamsfx.conversationbot.command.md) |  | [CommandBot](./teamsfx.commandbot.md) | <i>(Optional)</i> The entrypoint of command and response. |
-|  [notification?](./teamsfx.conversationbot.notification.md) |  | [NotificationBot](./teamsfx.notificationbot.md) | <i>(Optional)</i> The entrypoint of notification. |
+|  [adapter](./teamsfx.conversationbot.adapter.md) | <code>readonly</code> | BotFrameworkAdapter | The bot adapter. |
+|  [command?](./teamsfx.conversationbot.command.md) | <code>readonly</code> | [CommandBot](./teamsfx.commandbot.md) | <i>(Optional)</i> The entrypoint of command and response. |
+|  [notification?](./teamsfx.conversationbot.notification.md) | <code>readonly</code> | [NotificationBot](./teamsfx.notificationbot.md) | <i>(Optional)</i> The entrypoint of notification. |
 
 ## Methods
 

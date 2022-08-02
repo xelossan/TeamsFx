@@ -18,7 +18,7 @@ static attachSigninCard(title: string, url: string, text?: string): Partial<Acti
 |  --- | --- | --- |
 |  title | string | The title for the card's sign-in button. |
 |  url | string | The URL of the sign-in page to use. |
-|  text | string | Optional. Additional text to include on the card. |
+|  text | string | <i>(Optional)</i> Optional. Additional text to include on the card. |
 
 <b>Returns:</b>
 

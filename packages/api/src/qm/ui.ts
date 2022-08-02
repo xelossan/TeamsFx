@@ -407,10 +407,10 @@ export class GroupOfTasks<T> implements RunnableTask<Result<T, FxError>[]> {
           } catch (e) {
             if (isFastFail) {
               this.isCanceled = true;
-              resolve(err(e));
+              resolve(err(e as FxError));
               return;
             }
-            results.push(err(e));
+            results.push(err(e as FxError));
           } finally {
             this.current = i + 1;
           }

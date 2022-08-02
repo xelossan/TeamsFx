@@ -15,8 +15,8 @@ export interface TeamsBotSsoPromptTokenResponse extends TokenResponse
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [ssoToken](./teamsfx.teamsbotssoprompttokenresponse.ssotoken.md) | string | SSO token for user |
-|  [ssoTokenExpiration](./teamsfx.teamsbotssoprompttokenresponse.ssotokenexpiration.md) | string | Expire time of SSO token |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [ssoToken](./teamsfx.teamsbotssoprompttokenresponse.ssotoken.md) |  | string | SSO token for user |
+|  [ssoTokenExpiration](./teamsfx.teamsbotssoprompttokenresponse.ssotokenexpiration.md) |  | string | Expire time of SSO token |
 
