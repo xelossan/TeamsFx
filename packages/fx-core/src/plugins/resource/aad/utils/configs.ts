@@ -36,17 +36,16 @@ import {
 } from "../../../../common/localSettingsConstants";
 import { IAADDefinition } from "../interfaces/IAADDefinition";
 import { TelemetryUtils } from "./telemetry";
-import { BuiltInFeaturePluginNames } from "../../../solution/fx-solution/v3/constants";
 import { ResultFactory } from "../results";
 import { getPermissionRequest } from "../permissions";
 import { GraphScopes, isAadManifestEnabled } from "../../../../common";
 import { convertToAlphanumericOnly } from "../../../../common/utils";
-import { ComponentNames } from "../../../../component/constants";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 import { isV3 } from "../../../../core/globalVars";
 
-const aadComponentKey = isV3() ? ComponentNames.AadApp : BuiltInFeaturePluginNames.aad;
-const tabComponentKey = isV3() ? ComponentNames.TeamsTab : BuiltInFeaturePluginNames.frontend;
-const botComponentKey = isV3() ? ComponentNames.TeamsBot : BuiltInFeaturePluginNames.bot;
+const aadComponentKey = isV3() ? ComponentNames.AadApp : V1PluginNames.aad;
+const tabComponentKey = isV3() ? ComponentNames.TeamsTab : V1PluginNames.frontend;
+const botComponentKey = isV3() ? ComponentNames.TeamsBot : V1PluginNames.bot;
 
 export class Utils {
   public static addLogAndTelemetryWithLocalDebug(
@@ -601,7 +600,7 @@ export class PostProvisionConfig {
   }
   public restoreConfigFromEnvInfo(ctx: v2.Context, envInfo: v3.EnvInfoV3): void {
     // const solutionSettings = ctx.projectSetting.solutionSettings as v3.TeamsFxSolutionSettings;
-    const aadResource = envInfo.state[BuiltInFeaturePluginNames.aad] as v3.AADApp;
+    const aadResource = envInfo.state[V1PluginNames.aad] as v3.AADApp;
     let frontendEndpoint = aadResource?.endpoint;
     if (!frontendEndpoint) {
       frontendEndpoint = envInfo.state[tabComponentKey]?.endpoint;

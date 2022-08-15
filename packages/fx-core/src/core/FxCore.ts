@@ -54,7 +54,6 @@ import {
 import { TelemetryReporterInstance } from "../common/telemetry";
 import { createV2Context, mapToJson, undefinedName } from "../common/tools";
 import { getTemplatesFolder } from "../folder";
-import { getLocalAppName } from "../plugins/resource/appstudio/utils/utils";
 import { AppStudioPluginV3 } from "../plugins/resource/appstudio/v3";
 import {
   ExistingTabOptionItem,
@@ -62,7 +61,6 @@ import {
   M365SsoLaunchPageOptionItem,
   TabSPFxItem,
 } from "../plugins/solution/fx-solution/question";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
 import { CallbackRegistry } from "./callback";
 import { checkPermission, grantPermission, listCollaborator } from "./collaborator";
 import { LocalCrypto } from "./crypto";
@@ -103,7 +101,6 @@ import { ProjectSettingsWriterMW } from "./middleware/projectSettingsWriter";
 import {
   getQuestionsForAddFeature,
   getQuestionsForCreateProjectV2,
-  getQuestionsForCreateProjectV3,
   getQuestionsForDeploy,
   getQuestionsForInit,
   getQuestionsForProvision,
@@ -143,7 +140,7 @@ import {
 } from "../component/questionV3";
 import { ProjectVersionCheckerMW } from "./middleware/projectVersionChecker";
 import { addCicdQuestion } from "../component/feature/cicd";
-import { ComponentNames } from "../component/constants";
+import { ComponentNames, V1PluginNames } from "../component/constants";
 import { ApiConnectorImpl } from "../plugins/resource/apiconnector/plugin";
 import { publishQuestion } from "../component/resource/appManifest/appManifest";
 import { createEnvWithName } from "../component/envManager";
@@ -465,7 +462,7 @@ export class FxCore implements v3.ICore {
       permissionRequestProvider: TOOLS.permissionRequest,
       projectSetting: projectSettings,
     };
-    const appStudioV3 = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+    const appStudioV3 = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
     return appStudioV3.registerTeamsApp(
       context,
       inputs as v2.InputsWithProjectPath,
@@ -1525,7 +1522,7 @@ export class FxCore implements v3.ICore {
     const context = createV2Context(projectSettings);
     ctx.contextV2 = context;
 
-    const appStudioV3 = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+    const appStudioV3 = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
 
     // pre-check before initialize
     const preCheckResult = await this.preCheck(appStudioV3, projectPath);
@@ -1635,7 +1632,6 @@ export class FxCore implements v3.ICore {
 
   //V1,V2 questions
   _getQuestionsForCreateProjectV2 = getQuestionsForCreateProjectV2;
-  _getQuestionsForCreateProjectV3 = getQuestionsForCreateProjectV3;
   _getQuestionsForUserTask = getQuestionsForUserTaskV2;
   _getQuestions = getQuestionsV2;
   //v3 questions

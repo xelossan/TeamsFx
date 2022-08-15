@@ -16,8 +16,8 @@ import {
   TabOptionItem,
   TabSPFxItem,
 } from "../plugins/solution/fx-solution/question";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
 import * as uuid from "uuid";
+import { V1PluginNames } from "../component/constants";
 
 export function validateProjectSettings(projectSettings: ProjectSettings): string | undefined {
   if (!projectSettings) return "empty projectSettings";
@@ -84,13 +84,13 @@ export function isValidProject(workspacePath?: string): boolean {
 export function hasAAD(projectSetting: ProjectSettings): boolean {
   const solutionSettings = projectSetting.solutionSettings as AzureSolutionSettings | undefined;
   if (!solutionSettings) return false;
-  return solutionSettings.activeResourcePlugins.includes(BuiltInFeaturePluginNames.aad);
+  return solutionSettings.activeResourcePlugins.includes(V1PluginNames.aad);
 }
 
 export function hasSPFx(projectSetting: ProjectSettings): boolean {
   const solutionSettings = projectSetting.solutionSettings as AzureSolutionSettings | undefined;
   if (!solutionSettings) return false;
-  return solutionSettings.activeResourcePlugins.includes(BuiltInFeaturePluginNames.spfx);
+  return solutionSettings.activeResourcePlugins.includes(V1PluginNames.spfx);
 }
 
 export function hasAzureResource(projectSetting: ProjectSettings, excludeAad = false): boolean {
@@ -105,17 +105,17 @@ export function hasAzureResource(projectSetting: ProjectSettings, excludeAad = f
 
 export function getAzurePlugins(excludeAad = false): string[] {
   const azurePlugins = [
-    BuiltInFeaturePluginNames.apim,
-    BuiltInFeaturePluginNames.bot,
-    BuiltInFeaturePluginNames.frontend,
-    BuiltInFeaturePluginNames.function,
-    BuiltInFeaturePluginNames.identity,
-    BuiltInFeaturePluginNames.keyVault,
-    BuiltInFeaturePluginNames.simpleAuth,
-    BuiltInFeaturePluginNames.sql,
+    V1PluginNames.apim,
+    V1PluginNames.bot,
+    V1PluginNames.frontend,
+    V1PluginNames.function,
+    V1PluginNames.identity,
+    V1PluginNames.keyVault,
+    V1PluginNames.simpleAuth,
+    V1PluginNames.sql,
   ];
   if (!excludeAad) {
-    azurePlugins.push(BuiltInFeaturePluginNames.aad);
+    azurePlugins.push(V1PluginNames.aad);
   }
   return azurePlugins;
 }

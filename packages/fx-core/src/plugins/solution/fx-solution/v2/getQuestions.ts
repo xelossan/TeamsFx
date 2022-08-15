@@ -21,7 +21,6 @@ import {
 } from "@microsoft/teamsfx-api";
 import Container from "typedi";
 import { HelpLinks, ResourcePlugins } from "../../../../common/constants";
-import { Constants as AppStudioConstants } from "../../../resource/appstudio/constants";
 import { PluginNames, SolutionError, SolutionSource } from "../constants";
 import {
   ApiConnectionOptionItem,
@@ -62,8 +61,6 @@ import {
 import { checkWetherProvisionSucceeded, getSelectedPlugins, isAzureProject } from "./utils";
 import { isV3 } from "../../../../core/globalVars";
 import { TeamsAppSolutionNameV2 } from "./constants";
-import { BuiltInFeaturePluginNames } from "../v3/constants";
-import { AppStudioPluginV3 } from "../../../resource/appstudio/v3";
 import { canAddCapability, canAddResource } from "./executeUserTask";
 import { NoCapabilityFoundError } from "../../../../core/error";
 import { isExistingTabApp, isVSProject } from "../../../../common/projectSettingsHelper";
@@ -89,6 +86,8 @@ import {
 import { getDefaultString, getLocalizedString } from "../../../../common/localizeUtils";
 import { Constants } from "../../../resource/aad/constants";
 import { PluginBot } from "../../../resource/bot/resources/strings";
+import { V1PluginNames } from "../../../../component/constants";
+import { AppStudioPluginV3 } from "../../../resource/appstudio/v3";
 
 export async function getQuestionsForScaffolding(
   ctx: v2.Context,
@@ -641,7 +640,7 @@ export async function getQuestionsForAddCapability(
   if (canProceed.isErr()) {
     return err(canProceed.error);
   }
-  const appStudioPlugin = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+  const appStudioPlugin = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
   const tabExceedRes = await appStudioPlugin.capabilityExceedLimit(
     ctx,
     inputs as v2.InputsWithProjectPath,
@@ -828,7 +827,7 @@ async function getStaticOptionsForAddCapability(
     options.push(MessageExtensionNewUIItem);
     return ok(options);
   }
-  const appStudioPlugin = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+  const appStudioPlugin = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
   const tabExceedRes = await appStudioPlugin.capabilityExceedLimit(
     ctx,
     inputs as v2.InputsWithProjectPath,

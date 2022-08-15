@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { EnvInfo, Func, PluginContext, QTreeNode, v3 } from "@microsoft/teamsfx-api";
+import { V1PluginNames } from "../../../../component/constants";
 import { APIM_STATE_KEY } from "../../../../component/migrate";
-import { BuiltInFeaturePluginNames } from "../../../solution/fx-solution/v3/constants";
 import { IApimPluginConfig } from "../config";
 import { BuildError, NotImplemented } from "../error";
 import * as CLI from "../questions/cliQuestion";
@@ -56,7 +56,7 @@ export class VscQuestionManager implements IQuestionManager {
       documentNode = new QTreeNode(documentPathQuestion);
     } else {
       const apimState = envInfo!.state.get
-        ? (envInfo!.state as Map<string, any>).get(BuiltInFeaturePluginNames.apim)
+        ? (envInfo!.state as Map<string, any>).get(V1PluginNames.apim)
         : (envInfo!.state as v3.ResourceStates)[APIM_STATE_KEY];
       const documentPathFunc = this.existingOpenApiDocumentFunc.getQuestion(
         projectPath!,

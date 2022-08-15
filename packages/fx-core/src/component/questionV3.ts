@@ -35,7 +35,7 @@ import {
   hasTab,
 } from "../common/projectSettingsHelperV3";
 import { canAddCICDWorkflows } from "../common/tools";
-import { ComponentNames } from "./constants";
+import { ComponentNames, V1PluginNames } from "./constants";
 import { ComponentName2pluginName } from "./migrate";
 import { readAppManifest } from "./resource/appManifest/utils";
 import { getComponent } from "./workflow";
@@ -82,7 +82,6 @@ import { functionNameQuestion } from "../plugins/resource/function/question";
 import { ApiConnectorImpl } from "../plugins/resource/apiconnector/plugin";
 import { addCicdQuestion } from "./feature/cicd";
 import { ApimPluginV3 } from "../plugins/resource/apim/v3";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
 import {
   versionCheckQuestion,
   webpartNameQuestion,
@@ -174,7 +173,7 @@ export async function getQuestionsForDeployV3(
   selectQuestion.default = options.map((i) => i.id);
   const node = new QTreeNode(selectQuestion);
   if (selectableComponents.includes(ComponentNames.APIM)) {
-    const apimV3 = Container.get<ApimPluginV3>(BuiltInFeaturePluginNames.apim);
+    const apimV3 = Container.get<ApimPluginV3>(V1PluginNames.apim);
     const apimDeployNodeRes = await apimV3.getQuestionsForDeploy(
       ctx,
       inputs,
@@ -184,7 +183,7 @@ export async function getQuestionsForDeployV3(
     if (apimDeployNodeRes.isErr()) return err(apimDeployNodeRes.error);
     if (apimDeployNodeRes.value) {
       const apimNode = apimDeployNodeRes.value;
-      apimNode.condition = { contains: BuiltInFeaturePluginNames.apim };
+      apimNode.condition = { contains: V1PluginNames.apim };
       node.addChild(apimNode);
     }
   }

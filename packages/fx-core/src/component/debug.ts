@@ -49,7 +49,7 @@ import {
   TelemetryEventName,
   TelemetryUtils,
 } from "../plugins/solution/fx-solution/debug/util/telemetry";
-import { ComponentNames } from "./constants";
+import { ComponentNames, V1PluginNames } from "./constants";
 import * as Launch from "../plugins/solution/fx-solution/debug/util/launch";
 import * as LaunchNext from "../plugins/solution/fx-solution/debug/util/launchNext";
 import * as Tasks from "../plugins/solution/fx-solution/debug/util/tasks";
@@ -59,7 +59,6 @@ import fs from "fs-extra";
 import { updateJson, useNewTasks } from "../plugins/solution/fx-solution/debug/scaffolding";
 import { isV3, TOOLS } from "../core";
 import { getComponent } from "./workflow";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
 
 export interface LocalEnvConfig {
   vscodeEnv?: VsCodeEnv;
@@ -127,12 +126,10 @@ export async function setupLocalEnvironmentCommon(
   config: LocalEnvConfig,
   envInfo: v3.EnvInfoV3
 ): Promise<Result<undefined, FxError>> {
-  const API_STATE_KEY = isV3() ? ComponentNames.TeamsApi : BuiltInFeaturePluginNames.function;
-  const TAB_STATE_KEY = isV3() ? ComponentNames.TeamsTab : BuiltInFeaturePluginNames.frontend;
-  const BOT_STATE_KEY = isV3() ? ComponentNames.TeamsBot : BuiltInFeaturePluginNames.bot;
-  const SIMPLE_AUTH_STATE_KEY = isV3()
-    ? ComponentNames.SimpleAuth
-    : BuiltInFeaturePluginNames.simpleAuth;
+  const API_STATE_KEY = isV3() ? ComponentNames.TeamsApi : V1PluginNames.function;
+  const TAB_STATE_KEY = isV3() ? ComponentNames.TeamsTab : V1PluginNames.frontend;
+  const BOT_STATE_KEY = isV3() ? ComponentNames.TeamsBot : V1PluginNames.bot;
+  const SIMPLE_AUTH_STATE_KEY = isV3() ? ComponentNames.SimpleAuth : V1PluginNames.simpleAuth;
 
   const vscEnv = inputs.vscodeEnv;
   const includeTab = config.hasAzureTab;
@@ -266,15 +263,11 @@ export async function configLocalEnvironmentCommon(
   config: LocalEnvConfig,
   envInfo: v3.EnvInfoV3
 ): Promise<Result<undefined, FxError>> {
-  const API_STATE_KEY = isV3() ? ComponentNames.TeamsApi : BuiltInFeaturePluginNames.function;
-  const AAD_STATE_KEY = isV3() ? ComponentNames.AadApp : BuiltInFeaturePluginNames.aad;
-  const TAB_STATE_KEY = isV3() ? ComponentNames.TeamsTab : BuiltInFeaturePluginNames.frontend;
-  const SIMPLE_AUTH_STATE_KEY = isV3()
-    ? ComponentNames.SimpleAuth
-    : BuiltInFeaturePluginNames.simpleAuth;
-  const APP_MANIFEST_KEY = isV3()
-    ? ComponentNames.AppManifest
-    : BuiltInFeaturePluginNames.appStudio;
+  const API_STATE_KEY = isV3() ? ComponentNames.TeamsApi : V1PluginNames.function;
+  const AAD_STATE_KEY = isV3() ? ComponentNames.AadApp : V1PluginNames.aad;
+  const TAB_STATE_KEY = isV3() ? ComponentNames.TeamsTab : V1PluginNames.frontend;
+  const SIMPLE_AUTH_STATE_KEY = isV3() ? ComponentNames.SimpleAuth : V1PluginNames.simpleAuth;
+  const APP_MANIFEST_KEY = isV3() ? ComponentNames.AppManifest : V1PluginNames.appStudio;
 
   const includeTab = config.hasAzureTab;
   const includeBackend = config.hasApi;

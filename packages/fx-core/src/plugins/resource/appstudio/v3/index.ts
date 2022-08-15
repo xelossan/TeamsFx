@@ -17,7 +17,6 @@ import {
   UserError,
 } from "@microsoft/teamsfx-api";
 import { Service } from "typedi";
-import { BuiltInFeaturePluginNames } from "../../../solution/fx-solution/v3/constants";
 import { convert2PluginContext } from "../../utils4v2";
 import { AppStudioResultFactory } from "../results";
 import { AppStudioError } from "../errors";
@@ -56,9 +55,9 @@ import {
   getManifest,
 } from "../../../../component/resource/appManifest/appStudio";
 import { getProjectTemplatesFolderPath } from "../../../../common/utils";
-import { ComponentNames } from "../../../../component/constants";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 
-@Service(BuiltInFeaturePluginNames.appStudio)
+@Service(V1PluginNames.appStudio)
 export class AppStudioPluginV3 {
   name = "fx-resource-appstudio";
   displayName = "App Studio";

@@ -29,7 +29,6 @@ import {
 } from "./utils/questions";
 import { telemetryHelper } from "./utils/telemetry-helper";
 import "./v2";
-import "./v3";
 @Service(ResourcePlugins.SpfxPlugin)
 export class SpfxPlugin implements Plugin {
   name = "fx-resource-spfx";

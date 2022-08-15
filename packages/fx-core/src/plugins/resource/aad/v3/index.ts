@@ -19,11 +19,10 @@ import * as path from "path";
 import { Service } from "typedi";
 import { Bicep, ConstantString } from "../../../../common/constants";
 import { AadOwner, ResourcePermission } from "../../../../common/permissionInterface";
-import { ComponentNames } from "../../../../component/constants";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 import { CommonErrorHandlerMW } from "../../../../core/middleware/CommonErrorHandlerMW";
 import { getTemplatesFolder } from "../../../../folder";
 import { ensureSolutionSettings } from "../../../solution/fx-solution/utils/solutionSettingsHelper";
-import { BuiltInFeaturePluginNames } from "../../../solution/fx-solution/v3/constants";
 import { AppUser } from "../../appstudio/interfaces/appUser";
 import { AadAppClient } from "../aadAppClient";
 import {
@@ -60,7 +59,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
   @hooks([
     CommonErrorHandlerMW({
       telemetry: {
-        component: BuiltInFeaturePluginNames.aad,
+        component: V1PluginNames.aad,
         eventName: "generate-arm-templates",
       },
     }),
@@ -84,7 +83,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
    * when AAD is added, permissions.json is created
    * manifest template will also be updated
    */
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.aad } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.aad } })])
   async addInstance(
     ctx: v3.ContextWithManifestProvider,
     inputs: v2.InputsWithProjectPath
@@ -113,7 +112,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
 
   @hooks([
     CommonErrorHandlerMW({
-      telemetry: { component: BuiltInFeaturePluginNames.aad, eventName: "provision" },
+      telemetry: { component: V1PluginNames.aad, eventName: "provision" },
     }),
   ])
   async provisionResource(
@@ -192,7 +191,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
 
   @hooks([
     CommonErrorHandlerMW({
-      telemetry: { component: BuiltInFeaturePluginNames.aad, eventName: "post-provision" },
+      telemetry: { component: V1PluginNames.aad, eventName: "post-provision" },
     }),
   ])
   async configureResource(
@@ -274,7 +273,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
 
   @hooks([
     CommonErrorHandlerMW({
-      telemetry: { component: BuiltInFeaturePluginNames.aad },
+      telemetry: { component: V1PluginNames.aad },
     }),
   ])
   async listCollaborator(
@@ -301,7 +300,7 @@ export class AadAppForTeamsPluginV3 implements v3.PluginV3 {
 
   @hooks([
     CommonErrorHandlerMW({
-      telemetry: { component: BuiltInFeaturePluginNames.aad },
+      telemetry: { component: V1PluginNames.aad },
     }),
   ])
   async checkPermission(

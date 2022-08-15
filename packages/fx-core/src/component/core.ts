@@ -13,9 +13,14 @@ import {
   Platform,
   ProjectSettingsV3,
   ResourceContextV3,
+  AzureAccountProvider,
+  EnvConfigFileNameTemplate,
+  EnvNamePlaceholder,
   Result,
   UserError,
+  v2,
   v3,
+  Void,
 } from "@microsoft/teamsfx-api";
 import fs from "fs-extra";
 import path from "path";
@@ -92,12 +97,6 @@ import {
   checkWhetherLocalDebugM365TenantMatches,
   getBotTroubleShootMessage,
 } from "../plugins/solution/fx-solution/v2/utils";
-import { checkDeployAzureSubscription } from "../plugins/solution/fx-solution/v3/deploy";
-import {
-  askForDeployConsent,
-  fillInAzureConfigs,
-  getM365TenantId,
-} from "../plugins/solution/fx-solution/v3/provision";
 import { AzureResources, ComponentNames } from "./constants";
 import { pluginName2ComponentName } from "./migrate";
 import {
@@ -118,6 +117,7 @@ import {
 } from "../plugins/solution/fx-solution/utils/util";
 import { ensureBasicFolderStructure } from "../core";
 import { environmentManager } from "../core/environment";
+import { askForDeployConsent, fillInAzureConfigs, getM365TenantId } from "./provision";
 @Service("fx")
 export class TeamsfxCore {
   name = "fx";
@@ -770,4 +770,57 @@ async function preProvision(
     }
   }
   return ok(undefined);
+}
+
+/**
+ * make sure subscription is correct before deployment
+ *
+ */
+export async function checkDeployAzureSubscription(
+  ctx: v2.Context,
+  envInfo: v3.EnvInfoV3,
+  azureAccountProvider: AzureAccountProvider
+): Promise<Result<Void, FxError>> {
+  const subscriptionIdInConfig =
+    envInfo.config.azure?.subscriptionId || (envInfo.state.solution.subscriptionId as string);
+  const subscriptionInAccount = await azureAccountProvider.getSelectedSubscription(true);
+  if (!subscriptionIdInConfig) {
+    if (subscriptionInAccount) {
+      envInfo.state.solution.subscriptionId = subscriptionInAccount.subscriptionId;
+      envInfo.state.solution.subscriptionName = subscriptionInAccount.subscriptionName;
+      envInfo.state.solution.tenantId = subscriptionInAccount.tenantId;
+      ctx.logProvider.info(`[core] checkAzureSubscription pass!`);
+      return ok(Void);
+    } else {
+      return err(new UserError("core", "SubscriptionNotFound", "Failed to select subscription"));
+    }
+  }
+  // make sure the user is logged in
+  await azureAccountProvider.getAccountCredentialAsync(true);
+  // verify valid subscription (permission)
+  const subscriptions = await azureAccountProvider.listSubscriptions();
+  const targetSubInfo = subscriptions.find(
+    (item) => item.subscriptionId === subscriptionIdInConfig
+  );
+  if (!targetSubInfo) {
+    return err(
+      new UserError(
+        "core",
+        "SubscriptionNotFound",
+        `The subscription '${subscriptionIdInConfig}'(${
+          envInfo.state.solution.subscriptionName
+        }) for '${
+          envInfo.envName
+        }' environment is not found in the current account, please use the right Azure account or check the '${EnvConfigFileNameTemplate.replace(
+          EnvNamePlaceholder,
+          envInfo.envName
+        )}' file.`
+      )
+    );
+  }
+  envInfo.state.solution.subscriptionId = targetSubInfo.subscriptionId;
+  envInfo.state.solution.subscriptionName = targetSubInfo.subscriptionName;
+  envInfo.state.solution.tenantId = targetSubInfo.tenantId;
+  ctx.logProvider.info(`[core] checkAzureSubscription pass!`);
+  return ok(Void);
 }

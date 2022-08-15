@@ -82,7 +82,6 @@ import {
 } from "../question";
 import { getAllV2ResourcePluginMap, ResourcePluginsV2 } from "../ResourcePluginContainer";
 import { sendErrorTelemetryThenReturnError } from "../utils/util";
-import { BuiltInFeaturePluginNames } from "../v3/constants";
 import { TeamsAppSolutionNameV2 } from "./constants";
 import { generateResourceTemplateForPlugins } from "./generateResourceTemplate";
 import { scaffoldByPlugins } from "./scaffolding";
@@ -94,6 +93,7 @@ import { getTemplatesFolder } from "../../../../folder";
 import AdmZip from "adm-zip";
 import { unzip } from "../../../../common/template-utils/templatesUtils";
 import { InputsWithProjectPath } from "@microsoft/teamsfx-api/build/v2";
+import { V1PluginNames } from "../../../../component/constants";
 export async function executeUserTask(
   ctx: v2.Context,
   inputs: Inputs,
@@ -382,7 +382,7 @@ export async function addCapability(
     }
   }
 
-  const appStudioPlugin = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+  const appStudioPlugin = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
   const inputsWithProjectPath = inputs as v2.InputsWithProjectPath;
   const tabExceedRes = await appStudioPlugin.capabilityExceedLimit(
     ctx,
@@ -446,12 +446,12 @@ export async function addCapability(
     newCapabilitySet.add(TabSPFxItem.id);
     solutionSettings.hostType = HostTypeOptionSPFx.id;
   } else {
-    if (!originalSettings.activeResourcePlugins.includes(BuiltInFeaturePluginNames.identity)) {
+    if (!originalSettings.activeResourcePlugins.includes(V1PluginNames.identity)) {
       pluginNamesToArm.add(ResourcePluginsV2.IdentityPlugin);
     }
     if (
       !isAadManifestEnabled() &&
-      !originalSettings.activeResourcePlugins.includes(BuiltInFeaturePluginNames.aad)
+      !originalSettings.activeResourcePlugins.includes(V1PluginNames.aad)
     ) {
       pluginNamesToArm.add(ResourcePluginsV2.AadPlugin);
     }
@@ -478,9 +478,7 @@ export async function addCapability(
         pluginNamesToArm.add(ResourcePluginsV2.AadPlugin);
 
         // Add webapplicationInfo in teams app manifest
-        const appStudioPlugin = Container.get<AppStudioPluginV3>(
-          BuiltInFeaturePluginNames.appStudio
-        );
+        const appStudioPlugin = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
         await appStudioPlugin.addCapabilities(ctx, inputs as v2.InputsWithProjectPath, [
           { name: "WebApplicationInfo" },
         ]);
@@ -529,9 +527,9 @@ export async function addCapability(
   if (
     !toAddSpfx &&
     !isAadManifestEnabled() &&
-    !solutionSettings.activeResourcePlugins.includes(BuiltInFeaturePluginNames.aad)
+    !solutionSettings.activeResourcePlugins.includes(V1PluginNames.aad)
   ) {
-    solutionSettings.activeResourcePlugins.push(BuiltInFeaturePluginNames.aad);
+    solutionSettings.activeResourcePlugins.push(V1PluginNames.aad);
   }
 
   // 8. scaffold and update arm
@@ -1032,7 +1030,7 @@ export async function addSso(
   }
 
   // Update manifest
-  const appStudioPlugin = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
+  const appStudioPlugin = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
   await appStudioPlugin.addCapabilities(ctx, inputs as v2.InputsWithProjectPath, [
     { name: "WebApplicationInfo" },
   ]);

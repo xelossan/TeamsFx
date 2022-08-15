@@ -17,8 +17,7 @@ import {
 import { SubscriptionClient } from "@azure/arm-subscriptions";
 import { TokenCredentialsBase } from "@azure/ms-rest-nodeauth";
 import { SolutionTelemetryComponentName, SolutionTelemetryProperty } from "../constants";
-import { BuiltInFeaturePluginNames } from "../v3/constants";
-import { ComponentNames } from "../../../../component/constants";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 import { updateAzureParameters } from "../arm";
 import { backupFiles } from "./backupFiles";
 import fs from "fs-extra";
@@ -108,8 +107,7 @@ export function hasBotServiceCreated(envInfo: v3.EnvInfoV3): boolean {
   }
 
   return (
-    (!!envInfo.state[BuiltInFeaturePluginNames.bot] &&
-      !!envInfo.state[BuiltInFeaturePluginNames.bot]["resourceId"]) ||
+    (!!envInfo.state[V1PluginNames.bot] && !!envInfo.state[V1PluginNames.bot]["resourceId"]) ||
     (!!envInfo.state[ComponentNames.TeamsBot] &&
       !!envInfo.state[ComponentNames.TeamsBot]["resourceId"])
   );

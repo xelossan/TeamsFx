@@ -22,7 +22,6 @@ import { generateBicepFromFile } from "../../../../common/tools";
 import { CommonErrorHandlerMW } from "../../../../core/middleware/CommonErrorHandlerMW";
 import { getTemplatesFolder } from "../../../../folder";
 import { AzureResourceApim } from "../../../solution/fx-solution/question";
-import { BuiltInFeaturePluginNames } from "../../../solution/fx-solution/v3/constants";
 import { buildAnswer } from "../answer";
 import { AadPluginConfig, ApimPluginConfig, FunctionPluginConfig, SolutionConfig } from "../config";
 import {
@@ -40,11 +39,11 @@ import { Factory } from "../factory";
 import { ProgressBar } from "../utils/progressBar";
 import fs from "fs-extra";
 import { convertToAlphanumericOnly } from "../../../../common/utils";
-import { ComponentNames } from "../../../../component/constants";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 
-@Service(BuiltInFeaturePluginNames.apim)
+@Service(V1PluginNames.apim)
 export class ApimPluginV3 implements v3.PluginV3 {
-  name = BuiltInFeaturePluginNames.apim;
+  name = V1PluginNames.apim;
   displayName = "API Management";
   private progressBar: ProgressBar = new ProgressBar();
   async getQuestionsForDeploy(
@@ -73,7 +72,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
     return ok(node);
   }
 
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.apim } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.apim } })])
   async generateCode(
     ctx: v3.ContextWithManifestProvider,
     inputs: v2.InputsWithProjectPath
@@ -96,7 +95,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
   @hooks([
     CommonErrorHandlerMW({
       telemetry: {
-        component: BuiltInFeaturePluginNames.apim,
+        component: V1PluginNames.apim,
         eventName: "generate-arm-templates",
       },
     }),
@@ -144,7 +143,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
     };
     return ok([result]);
   }
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.apim } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.apim } })])
   async addInstance(
     ctx: v3.ContextWithManifestProvider,
     inputs: v2.InputsWithProjectPath
@@ -158,7 +157,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
   }
   @hooks([
     CommonErrorHandlerMW({
-      telemetry: { component: BuiltInFeaturePluginNames.apim, eventName: "update-arm-templates" },
+      telemetry: { component: V1PluginNames.apim, eventName: "update-arm-templates" },
     }),
   ])
   async updateBicep(
@@ -181,7 +180,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
     };
     return ok([result]);
   }
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.apim } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.apim } })])
   async provisionResource(
     ctx: v2.Context,
     inputs: v2.InputsWithProjectPath,
@@ -223,7 +222,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
     return ok(Void);
   }
 
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.apim } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.apim } })])
   async configureResource(
     ctx: v2.Context,
     inputs: v2.InputsWithProjectPath,
@@ -264,7 +263,7 @@ export class ApimPluginV3 implements v3.PluginV3 {
     delete apimResource[ApimPluginConfigKeys.publisherName];
     return ok(Void);
   }
-  @hooks([CommonErrorHandlerMW({ telemetry: { component: BuiltInFeaturePluginNames.frontend } })])
+  @hooks([CommonErrorHandlerMW({ telemetry: { component: V1PluginNames.frontend } })])
   async deploy(
     ctx: v2.Context,
     inputs: v2.InputsWithProjectPath,

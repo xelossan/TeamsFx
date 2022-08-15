@@ -30,7 +30,6 @@ import {
 } from "../common/permissionInterface";
 import { AppStudioScopes, getHashedEnv } from "../common/tools";
 import { AadAppForTeamsPluginV3 } from "../plugins/resource/aad/v3";
-import { AppStudioPluginV3 } from "../plugins/resource/appstudio/v3";
 import {
   AzureRoleAssignmentsHelpLink,
   SharePointManageSiteAdminHelpLink,
@@ -39,15 +38,15 @@ import {
   SOLUTION_PROVISION_SUCCEEDED,
 } from "../plugins/solution/fx-solution/constants";
 import { CollaborationUtil } from "../plugins/solution/fx-solution/v2/collaborationUtil";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
 import { AppUser } from "../plugins/resource/appstudio/interfaces/appUser";
 import { CoreSource } from "./error";
 import { TOOLS } from "./globalVars";
 import { getUserEmailQuestion } from "../plugins/solution/fx-solution/question";
 import { getDefaultString, getLocalizedString } from "../common/localizeUtils";
 import { VSCodeExtensionCommand } from "../common/constants";
-import { ComponentNames } from "../component/constants";
+import { ComponentNames, V1PluginNames } from "../component/constants";
 import { hasAAD, hasAzureResourceV3, hasSPFxTab } from "../common/projectSettingsHelperV3";
+import { AppStudioPluginV3 } from "../plugins/resource/appstudio/v3";
 
 export async function listCollaborator(
   ctx: ContextV3,
@@ -74,8 +73,8 @@ export async function listCollaborator(
     });
   }
   const hasAad = hasAAD(ctx.projectSetting);
-  const appStudio = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
-  const aadPlugin = Container.get<AadAppForTeamsPluginV3>(BuiltInFeaturePluginNames.aad);
+  const appStudio = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
+  const aadPlugin = Container.get<AadAppForTeamsPluginV3>(V1PluginNames.aad);
   const appStudioRes = await appStudio.listCollaborator(
     ctx,
     inputs,
@@ -269,8 +268,8 @@ export async function checkPermission(
     ctx.userInteraction.showMessage("info", message, false);
   }
 
-  const appStudio = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
-  const aadPlugin = Container.get<AadAppForTeamsPluginV3>(BuiltInFeaturePluginNames.aad);
+  const appStudio = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
+  const aadPlugin = Container.get<AadAppForTeamsPluginV3>(V1PluginNames.aad);
   const appStudioRes = await appStudio.checkPermission(
     ctx,
     inputs,
@@ -412,8 +411,8 @@ export async function grantPermission(
       ctx.userInteraction.showMessage("info", message, false);
     }
     const isAadActivated = hasAAD(ctx.projectSetting);
-    const appStudio = Container.get<AppStudioPluginV3>(BuiltInFeaturePluginNames.appStudio);
-    const aadPlugin = Container.get<AadAppForTeamsPluginV3>(BuiltInFeaturePluginNames.aad);
+    const appStudio = Container.get<AppStudioPluginV3>(V1PluginNames.appStudio);
+    const aadPlugin = Container.get<AadAppForTeamsPluginV3>(V1PluginNames.aad);
     const appStudioRes = await appStudio.grantPermission(
       ctx,
       inputs,

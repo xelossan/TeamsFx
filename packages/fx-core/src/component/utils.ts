@@ -31,8 +31,7 @@ import { convertToAlphanumericOnly, getProjectTemplatesFolderPath } from "../com
 import { LocalCrypto } from "../core/crypto";
 import { environmentManager } from "../core/environment";
 import { TOOLS } from "../core/globalVars";
-import { BuiltInFeaturePluginNames } from "../plugins/solution/fx-solution/v3/constants";
-import { ComponentNames, Scenarios, scenarioToComponent } from "./constants";
+import { ComponentNames, Scenarios, scenarioToComponent, V1PluginNames } from "./constants";
 import { DefaultManifestProvider } from "./resource/appManifest/manifestProvider";
 import { getComponent, getComponentByScenario } from "./workflow";
 
@@ -563,14 +562,14 @@ export function ensureComponentConnections(settingsV3: ProjectSettingsV3): void 
 // clear resources related info in envInfo so that we could provision successfully using new M365 tenant.
 export function resetEnvInfoWhenSwitchM365(envInfo: v3.EnvInfoV3): void {
   const keysToClear = [
-    BuiltInFeaturePluginNames.appStudio,
-    BuiltInFeaturePluginNames.aad,
+    V1PluginNames.appStudio,
+    V1PluginNames.aad,
     ComponentNames.AppManifest,
     ComponentNames.AadApp,
   ];
 
-  const apimKeys = [BuiltInFeaturePluginNames.apim, ComponentNames.APIM];
-  const botKeys = [BuiltInFeaturePluginNames.bot, ComponentNames.TeamsBot];
+  const apimKeys = [V1PluginNames.apim, ComponentNames.APIM];
+  const botKeys = [V1PluginNames.bot, ComponentNames.TeamsBot];
   const keys = Object.keys(envInfo.state);
 
   for (const key of keys) {

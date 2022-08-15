@@ -46,10 +46,7 @@ import { Container } from "typedi";
 import { ResourcePluginsV2 } from "../ResourcePluginContainer";
 import { PermissionRequestFileProvider } from "../../../../core/permissionRequest";
 import { Constants } from "../../../resource/appstudio/constants";
-import { BuiltInFeaturePluginNames } from "../v3/constants";
-import { fillInAzureConfigs, getM365TenantId } from "../v3/provision";
 import { resourceGroupHelper } from "../utils/ResourceGroupHelper";
-import { solutionGlobalVars } from "../v3/solutionGlobalVars";
 import {
   hasAAD,
   hasAzureResource,
@@ -61,10 +58,11 @@ import {
   hasBotServiceCreated,
   sendErrorTelemetryThenReturnError,
 } from "../utils/util";
-import { doesAllowSwitchAccount } from "../../../../core";
-import { ComponentNames } from "../../../../component/constants";
+import { doesAllowSwitchAccount, globalVars } from "../../../../core";
+import { ComponentNames, V1PluginNames } from "../../../../component/constants";
 import { resetEnvInfoWhenSwitchM365 } from "../../../../component/utils";
 import { TelemetryEvent, TelemetryProperty } from "../../../../common/telemetry";
+import { fillInAzureConfigs, getM365TenantId } from "../../../../component/provision";
 
 function getSubscriptionId(state: Json): string {
   if (state && state[GLOBAL_CONFIG] && state[GLOBAL_CONFIG][SUBSCRIPTION_ID]) {
@@ -146,9 +144,8 @@ async function provisionResourceImpl(
   const projectPath: string = inputs.projectPath;
 
   // check M365 tenant
-  if (!envInfo.state[BuiltInFeaturePluginNames.appStudio])
-    envInfo.state[BuiltInFeaturePluginNames.appStudio] = {};
-  const teamsAppResource = envInfo.state[BuiltInFeaturePluginNames.appStudio];
+  if (!envInfo.state[V1PluginNames.appStudio]) envInfo.state[V1PluginNames.appStudio] = {};
+  const teamsAppResource = envInfo.state[V1PluginNames.appStudio];
   if (!envInfo.state.solution) envInfo.state.solution = {};
   const solutionConfig = envInfo.state.solution;
   const tenantIdInConfig = teamsAppResource.tenantId;
@@ -175,9 +172,8 @@ async function provisionResourceImpl(
     resetEnvInfoWhenSwitchM365(envInfo as v3.EnvInfoV3);
   }
 
-  envInfo.state[BuiltInFeaturePluginNames.appStudio] =
-    envInfo.state[BuiltInFeaturePluginNames.appStudio] || {};
-  envInfo.state[BuiltInFeaturePluginNames.appStudio].tenantId = tenantIdInToken;
+  envInfo.state[V1PluginNames.appStudio] = envInfo.state[V1PluginNames.appStudio] || {};
+  envInfo.state[V1PluginNames.appStudio].tenantId = tenantIdInToken;
   envInfo.state.solution.teamsAppTenantId = tenantIdInToken;
   solutionConfig.teamsAppTenantId = tenantIdInToken;
 
@@ -322,7 +318,7 @@ async function provisionResourceImpl(
   );
 
   const teamsAppId = envInfo.state[PluginNames.APPST][Constants.TEAMS_APP_ID] as string;
-  solutionGlobalVars.TeamsAppId = teamsAppId;
+  globalVars.teamsAppId = teamsAppId;
   solutionInputs.remoteTeamsAppId = teamsAppId;
 
   // call deployArmTemplates
@@ -470,8 +466,7 @@ export async function askForProvisionConsentNew(
   } else if (!hasSwitchedM365Tenant && hasSwitchedSubscription) {
     switchedNotice = getLocalizedString("core.provision.switchedAzureSubscriptionNotice");
 
-    const botResource =
-      envInfo.state[BuiltInFeaturePluginNames.bot] ?? envInfo.state[ComponentNames.TeamsBot];
+    const botResource = envInfo.state[V1PluginNames.bot] ?? envInfo.state[ComponentNames.TeamsBot];
     const newBotNotice =
       !!botResource && !!botResource["resourceId"]
         ? getLocalizedString("core.provision.createNewAzureBotNotice")

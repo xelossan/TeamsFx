@@ -30,7 +30,6 @@ import {
   QuestionModelMW,
   SolutionLoaderMW,
 } from "../../../src/core/middleware";
-import { SolutionLoaderMW_V3 } from "../../../src/core/middleware/solutionLoaderV3";
 import {
   MockProjectSettings,
   mockSolutionV3getQuestionsAPI,
@@ -38,7 +37,6 @@ import {
   randomAppName,
 } from "../utils";
 import { Container } from "typedi";
-import { BuiltInSolutionNames } from "../../../src/plugins/solution/fx-solution/v3/constants";
 import { CoreHookContext } from "../../../src/core/types";
 describe("Middleware - QuestionModelMW", () => {
   const sandbox = sinon.createSandbox();
@@ -109,11 +107,6 @@ describe("Middleware - QuestionModelMW", () => {
       return this._return(inputs);
     }
     async _getQuestionsForCreateProjectV2(
-      inputs: Inputs
-    ): Promise<Result<QTreeNode | undefined, FxError>> {
-      return ok(node);
-    }
-    async _getQuestionsForCreateProjectV3(
       inputs: Inputs
     ): Promise<Result<QTreeNode | undefined, FxError>> {
       return ok(node);
@@ -195,18 +188,18 @@ describe("Middleware - QuestionModelMW", () => {
 
   hooks(MockCoreForQM, {
     createProjectV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
-    createProjectV3: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
+    createProjectV3: [MockContextLoaderMW, QuestionModelMW],
     provisionResourcesV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
-    provisionResourcesV3: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
+    provisionResourcesV3: [MockContextLoaderMW, QuestionModelMW],
     deployArtifactsV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
-    deployArtifactsV3: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
+    deployArtifactsV3: [MockContextLoaderMW, QuestionModelMW],
     localDebugV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
     publishApplicationV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
-    publishApplicationV3: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
+    publishApplicationV3: [MockContextLoaderMW, QuestionModelMW],
     executeUserTaskV2: [SolutionLoaderMW, MockContextLoaderMW, QuestionModelMW],
-    executeUserTaskV3: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
-    init: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
-    addFeature: [SolutionLoaderMW_V3, MockContextLoaderMW, QuestionModelMW],
+    executeUserTaskV3: [MockContextLoaderMW, QuestionModelMW],
+    init: [MockContextLoaderMW, QuestionModelMW],
+    addFeature: [MockContextLoaderMW, QuestionModelMW],
   });
 
   it("success to run question model for V3 API", async () => {
@@ -358,10 +351,5 @@ describe("Middleware - QuestionModelMW", () => {
     const func: Func = { method: "test", namespace: "" };
     const res2 = await my.executeUserTaskV2(func, inputs);
     assert(res2.isErr() && res2.error.name === new EmptyOptionError().name);
-  });
-  it("Core's getQuestion APIs", async () => {
-    const solution = Container.get<v3.ISolution>(BuiltInSolutionNames.azure);
-    mockSolutionV3getQuestionsAPI(solution, sandbox);
-    assert.isTrue(true);
   });
 });

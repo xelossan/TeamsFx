@@ -1,5 +1,5 @@
 import { TelemetryReporter } from "@microsoft/teamsfx-api";
-import { solutionGlobalVars } from "../../../solution/fx-solution/v3/solutionGlobalVars";
+import { globalVars } from "../../../../core";
 import { Telemetry } from "../constants";
 
 export class TelemetryUtils {
@@ -46,7 +46,7 @@ export class TelemetryUtils {
 
   private static addProperties(properties: { [key: string]: string }) {
     properties[Telemetry.properties.component] = Telemetry.componentName;
-    const appId = solutionGlobalVars.TeamsAppId;
+    const appId = globalVars.teamsAppId;
     if (appId) {
       properties[Telemetry.properties.appid] = appId as string;
     } else {

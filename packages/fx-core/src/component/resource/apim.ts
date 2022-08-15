@@ -15,8 +15,7 @@ import {
 import "reflect-metadata";
 import { Service, Container } from "typedi";
 import { ApimPluginV3 } from "../../plugins/resource/apim/v3";
-import { BuiltInFeaturePluginNames } from "../../plugins/solution/fx-solution/v3/constants";
-import { APIMOutputs, ComponentNames } from "../constants";
+import { APIMOutputs, ComponentNames, V1PluginNames } from "../constants";
 import { ActionExecutionMW } from "../middleware/actionExecutionMW";
 import { AzureResource } from "./azureResource";
 @Service(ComponentNames.APIM)
@@ -40,7 +39,7 @@ export class APIMResource extends AzureResource {
   ): Promise<Result<Action | undefined, FxError>> {
     if (context.envInfo.envName !== "local") {
       const ctx = context as ResourceContextV3;
-      const apimV3 = Container.get<ApimPluginV3>(BuiltInFeaturePluginNames.apim);
+      const apimV3 = Container.get<ApimPluginV3>(V1PluginNames.apim);
       const res = await apimV3.provisionResource(ctx, inputs, ctx.envInfo, ctx.tokenProvider);
       if (res.isErr()) return err(res.error);
     }
@@ -52,7 +51,7 @@ export class APIMResource extends AzureResource {
   ): Promise<Result<undefined, FxError>> {
     if (context.envInfo.envName !== "local") {
       const ctx = context as ResourceContextV3;
-      const apimV3 = Container.get<ApimPluginV3>(BuiltInFeaturePluginNames.apim);
+      const apimV3 = Container.get<ApimPluginV3>(V1PluginNames.apim);
       const res = await apimV3.configureResource(ctx, inputs, ctx.envInfo, ctx.tokenProvider);
       if (res.isErr()) return err(res.error);
     }
@@ -61,7 +60,7 @@ export class APIMResource extends AzureResource {
   @hooks([
     ActionExecutionMW({
       question: (context: ContextV3, inputs: InputsWithProjectPath) => {
-        const apimV3 = Container.get<ApimPluginV3>(BuiltInFeaturePluginNames.apim);
+        const apimV3 = Container.get<ApimPluginV3>(V1PluginNames.apim);
         return apimV3.getQuestionsForDeploy(
           context,
           inputs,
@@ -76,7 +75,7 @@ export class APIMResource extends AzureResource {
     inputs: InputsWithProjectPath
   ): Promise<Result<undefined, FxError>> {
     const ctx = context as ResourceContextV3;
-    const apimV3 = Container.get<ApimPluginV3>(BuiltInFeaturePluginNames.apim);
+    const apimV3 = Container.get<ApimPluginV3>(V1PluginNames.apim);
     const res = await apimV3.deploy(ctx, inputs, ctx.envInfo, ctx.tokenProvider);
     if (res.isErr()) return err(res.error);
     return ok(undefined);

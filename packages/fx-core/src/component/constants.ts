@@ -28,6 +28,20 @@ export const ComponentNames = {
   CICD: "cicd",
 };
 
+export const V1PluginNames = {
+  appStudio: "fx-resource-appstudio",
+  aad: "fx-resource-aad-app-for-teams",
+  bot: "fx-resource-bot",
+  function: "fx-resource-function",
+  frontend: "fx-resource-frontend-hosting",
+  spfx: "fx-resource-spfx",
+  simpleAuth: "fx-resource-simple-auth",
+  identity: "fx-resource-identity",
+  apim: "fx-resource-apim",
+  keyVault: "fx-resource-key-vault",
+  sql: "fx-resource-azure-sql",
+};
+
 export const AzureResources = [
   ComponentNames.APIM,
   ComponentNames.AzureWebApp,
