@@ -732,6 +732,35 @@
         "properties": {
           "command": {
             "type": "string"
+          },
+          "args": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "configFile": {
+                    "type": "string",
+                    "description": "The configuration file of the ngrok tunnels."
+                  },
+                  "binFolder": {
+                    "type": "string",
+                    "description": "The ngrok bin folder.",
+                    "default": "${command:fx-extension.getNgrokBinFolder}"
+                  },
+                  "reuse": {
+                    "type": "boolean",
+                    "description": "Reuse the tunnel service after the debug session closed.",
+                    "default": false
+                  }
+                }
+              }
+            ]
           }
         }
       }

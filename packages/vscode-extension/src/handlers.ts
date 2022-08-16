@@ -108,7 +108,7 @@ import { automaticNpmInstallHandler } from "./debug/npmInstallHandler";
 import * as localPrerequisites from "./debug/prerequisitesHandler";
 import { selectAndDebug } from "./debug/runIconHandler";
 import { getTeamsAppInternalId, showInstallAppInTeamsMessage } from "./debug/teamsAppInstallation";
-import { terminateAllRunningTeamsfxTasks } from "./debug/teamsfxTaskHandler";
+import { runTask, terminateAllRunningTeamsfxTasks } from "./debug/teamsfxTaskHandler";
 import { ExtensionErrors, ExtensionSource } from "./error";
 import * as exp from "./exp/index";
 import { TreatmentVariableValue } from "./exp/treatmentVariables";
@@ -1418,6 +1418,53 @@ export async function getFuncPathHandler(): Promise<string> {
   }
 
   return `${path.delimiter}`;
+}
+
+interface NpmInstallOption {
+  npmInstallArgs: string;
+  cwd: string;
+  forceUpdate: boolean;
+}
+
+export async function getNpmInstallHandler(...args: any[]): Promise<string> {
+  const arg = args?.[0]?.[0] as { [key: string]: NpmInstallOption };
+  if (!args) {
+    throw new Error("Unexpected input");
+  }
+  // await runTask(
+  //   new vscode.Task(
+  //     {
+  //       type: "shell",
+  //       command: "set env",
+  //     },
+  //     vscode.workspace.workspaceFolders![0],
+  //     "set env",
+  //     ProductName,
+  //     new vscode.ShellExecution("$env:XIAOFHUA=$env:xftest", {
+  //       env: { xftest: JSON.stringify(args) },
+  //     })
+  //   )
+  // );
+
+  const checkPromises = [];
+  let currentStep = 1;
+  const totalSteps = Object.keys(arg).length;
+  for (const key of Object.keys(arg)) {
+    const option = arg[key];
+    option.cwd = option.cwd.replace("${workspaceFolder}", globalVariables.workspaceUri!.fsPath);
+    checkPromises.push(
+      localPrerequisites.checkNpmInstall(
+        key,
+        option.cwd,
+        key,
+        `(${currentStep++}/${totalSteps}) Installing ${key} ...`
+      )
+    );
+  }
+  const promiseResults = await Promise.all(checkPromises);
+  VsCodeLogInstance.outputChannel.appendLine("");
+  VsCodeLogInstance.outputChannel.appendLine(JSON.stringify(promiseResults));
+  return JSON.stringify(promiseResults);
 }
 
 /**

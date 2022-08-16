@@ -33,6 +33,7 @@ import {
 import { vscodeHelper } from "./depsChecker/vscodeHelper";
 import { localTelemetryReporter } from "./localTelemetryReporter";
 import { TelemetryEvent } from "../telemetry/extTelemetryEvents";
+import { NgrokTaskTerminal } from "./ngrokTaskProvider";
 
 export class TeamsfxTaskProvider implements vscode.TaskProvider {
   public static readonly type: string = ProductName;
@@ -148,11 +149,21 @@ export class TeamsfxTaskProvider implements vscode.TaskProvider {
   }
 
   public async resolveTask(
-    task: vscode.Task,
+    _task: vscode.Task,
     token?: vscode.CancellationToken | undefined
   ): Promise<vscode.Task | undefined> {
     // Return undefined since all tasks are provided and fully resolved
-    return undefined;
+    return new vscode.Task(
+      _task.definition,
+      vscode.TaskScope.Workspace,
+      _task.name,
+      TeamsfxTaskProvider.type,
+      new vscode.CustomExecution(
+        async (resolvedDefinition: vscode.TaskDefinition): Promise<vscode.Pseudoterminal> => {
+          return new NgrokTaskTerminal(resolvedDefinition);
+        }
+      )
+    );
   }
 
   private async createFrontendStartTask(

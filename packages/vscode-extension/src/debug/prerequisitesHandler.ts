@@ -908,7 +908,7 @@ function handleNodeNotSupportedError(
   }
 }
 
-function checkNpmInstall(
+export function checkNpmInstall(
   component: string,
   folder: string,
   appName: string,

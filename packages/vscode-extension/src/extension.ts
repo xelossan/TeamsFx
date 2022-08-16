@@ -224,6 +224,12 @@ function registerInternalCommands(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(getFuncPathCmd);
 
+  const installNpmPackagesCmd = vscode.commands.registerCommand(
+    "fx-extension.install-npm-packages",
+    (...args: any[]) => Correlator.run(handlers.getNpmInstallHandler, args)
+  );
+  context.subscriptions.push(installNpmPackagesCmd);
+
   const installAppInTeamsCmd = vscode.commands.registerCommand(
     "fx-extension.install-app-in-teams",
     () => Correlator.runWithId(getLocalDebugSessionId(), handlers.installAppInTeams)
