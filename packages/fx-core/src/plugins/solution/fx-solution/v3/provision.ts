@@ -42,14 +42,22 @@ import {
 import { resourceGroupHelper } from "../utils/ResourceGroupHelper";
 import { BuiltInFeaturePluginNames } from "./constants";
 
+function findSubscriptionFromList(
+  subscriptionId: string,
+  subscriptions: SubscriptionInfo[]
+): SubscriptionInfo | undefined {
+  return subscriptions.find((item) => item.subscriptionId === subscriptionId);
+}
+
 /**
  * make sure subscription is correct before provision
  *
  */
-export async function checkProvisionSubscriptionWhenSwitchAccountEnabled(
+export async function checkProvisionSubscription(
   ctx: v2.Context,
   envInfo: v3.EnvInfoV3,
-  azureAccountProvider: AzureAccountProvider
+  azureAccountProvider: AzureAccountProvider,
+  targetSubscriptionIdFromCli: string | undefined
 ): Promise<Result<ProvisionSubscriptionCheckResult, FxError>> {
   const subscriptionIdInConfig: string | undefined = envInfo.config.azure?.subscriptionId;
   const subscriptionNameInConfig: string | undefined =
@@ -58,9 +66,8 @@ export async function checkProvisionSubscriptionWhenSwitchAccountEnabled(
   const subscriptionNameInState: string | undefined =
     envInfo.state.solution.subscriptionName || subscriptionIdInState;
 
-  const subscriptionInAccount = await azureAccountProvider.getSelectedSubscription(true);
-
-  if (!subscriptionIdInState && !subscriptionIdInConfig) {
+  if (!subscriptionIdInState && !subscriptionIdInConfig && !targetSubscriptionIdFromCli) {
+    const subscriptionInAccount = await azureAccountProvider.getSelectedSubscription(true);
     if (!subscriptionInAccount) {
       return err(
         new UserError(
@@ -81,10 +88,28 @@ export async function checkProvisionSubscriptionWhenSwitchAccountEnabled(
   // verify valid subscription (permission)
   const subscriptions = await azureAccountProvider.listSubscriptions();
 
-  if (subscriptionIdInConfig) {
-    const targetConfigSubInfo = subscriptions.find(
-      (item) => item.subscriptionId === subscriptionIdInConfig
+  if (targetSubscriptionIdFromCli) {
+    const targetSubscriptionInfo = findSubscriptionFromList(
+      targetSubscriptionIdFromCli,
+      subscriptions
     );
+    if (!targetSubscriptionInfo) {
+      return err(
+        new UserError(
+          SolutionSource,
+          SolutionError.SubscriptionNotFound,
+          `The subscription '${targetSubscriptionIdFromCli}' for '${envInfo.envName}' environment is not found in the current account, please use the right Azure account or check the subscription parameter.`
+        )
+      );
+    } else {
+      updateEnvInfoSubscription(envInfo, targetSubscriptionInfo);
+      ctx.logProvider.info(`[${PluginDisplayName.Solution}] checkAzureSubscription pass!`);
+      return ok({ hasSwitchedSubscription: false });
+    }
+  }
+
+  if (subscriptionIdInConfig) {
+    const targetConfigSubInfo = findSubscriptionFromList(subscriptionIdInConfig, subscriptions);
 
     if (!targetConfigSubInfo) {
       return err(
@@ -100,20 +125,14 @@ export async function checkProvisionSubscriptionWhenSwitchAccountEnabled(
         )
       );
     } else {
-      return compareWithStateSubscription(
-        ctx,
-        envInfo,
-        targetConfigSubInfo,
-        subscriptionIdInState,
-        subscriptionNameInState,
-        azureAccountProvider
-      );
+      return compareWithStateSubscription(ctx, envInfo, targetConfigSubInfo, subscriptionIdInState);
     }
   } else {
     const targetStateSubInfo = subscriptions.find(
       (item) => item.subscriptionId === subscriptionIdInState
     );
 
+    const subscriptionInAccount = await azureAccountProvider.getSelectedSubscription(true);
     if (!subscriptionInAccount) {
       if (targetStateSubInfo) {
         updateEnvInfoSubscription(envInfo, targetStateSubInfo);
@@ -133,9 +152,7 @@ export async function checkProvisionSubscriptionWhenSwitchAccountEnabled(
         ctx,
         envInfo,
         subscriptionInAccount,
-        subscriptionIdInState,
-        subscriptionNameInState,
-        azureAccountProvider
+        subscriptionIdInState
       );
     }
   }
@@ -151,9 +168,7 @@ async function compareWithStateSubscription(
   ctx: v2.Context,
   envInfo: v3.EnvInfoV3,
   targetSubscriptionInfo: SubscriptionInfo,
-  subscriptionInStateId: string | undefined,
-  subscriptionInStateName: string | undefined,
-  azureAccountProvider: AzureAccountProvider
+  subscriptionInStateId: string | undefined
 ): Promise<Result<ProvisionSubscriptionCheckResult, FxError>> {
   const hasSwitchedSubscription =
     !!subscriptionInStateId && targetSubscriptionInfo.subscriptionId !== subscriptionInStateId;
@@ -220,10 +235,12 @@ export async function fillInAzureConfigs(
     inputs.env ? { [TelemetryProperty.Env]: getHashedEnv(inputs.env) } : {}
   );
 
-  const subscriptionResult = await checkProvisionSubscriptionWhenSwitchAccountEnabled(
+  const targetSubscriptionId = inputs.targetSubscriptionId;
+  const subscriptionResult = await checkProvisionSubscription(
     ctx,
     envInfo,
-    tokenProvider.azureAccountProvider
+    tokenProvider.azureAccountProvider,
+    targetSubscriptionId
   );
 
   if (subscriptionResult.isErr()) {
