@@ -141,9 +141,8 @@ import * as backup from "../../../src/plugins/solution/fx-solution/utils/backupF
 import { resourceGroupHelper } from "../../../src/plugins/solution/fx-solution/utils/ResourceGroupHelper";
 import * as manifestTemplate from "../../../src/plugins/resource/appstudio/manifestTemplate";
 import { SolutionRunningState } from "../../../src/plugins/solution/fx-solution/types";
+import { provisionUtils } from "../../../src/component/provisionUtils";
 import * as sub from "@azure/arm-subscriptions";
-import mockedEnv from "mocked-env";
-import { askForProvisionConsentNew } from "../../../src/plugins/solution/fx-solution/v2/provision";
 import { PollerLike } from "@azure/core-lro";
 import { PollOperationState } from "@azure/core-lro";
 
@@ -1661,7 +1660,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    await askForProvisionConsentNew(
+    await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -1729,7 +1728,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -1799,7 +1798,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -1869,7 +1868,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -1939,7 +1938,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -1991,7 +1990,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -2037,7 +2036,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -2101,7 +2100,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
@@ -2162,7 +2161,7 @@ describe("askForProvisionConsentNew", () => {
     const m365AccountName = "m365Name";
 
     // Act
-    const res = await askForProvisionConsentNew(
+    const res = await provisionUtils.askForProvisionConsentNew(
       mockedCtx,
       mockedAzureTokenProvider,
       mockedEnvInfo as v3.EnvInfoV3,
