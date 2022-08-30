@@ -3,7 +3,6 @@
 import axios from "axios";
 import { assert, use as chaiUse } from "chai";
 import { SqlManagementClient, SqlManagementModels } from "@azure/arm-sql";
-import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
 import * as chaiPromises from "chai-as-promised";
 import { Connection, Request } from "tedious";
 import { getTediousConnectionConfig, TeamsFx } from "../../../src";
@@ -54,13 +53,6 @@ describe("DefaultTediousConnection Tests - Node", () => {
 const echoIpAddress = "https://api.ipify.org";
 const localRule = "FirewallAllowLocalIP";
 
-async function getSQLManagerClient(): Promise<msRestNodeAuth.UserTokenCredentials | undefined> {
-  const username: string | undefined = process.env.SDK_INTEGRATION_TEST_ACCOUNT_NAME;
-  const password: string | undefined = process.env.SDK_INTEGRATION_TEST_ACCOUNT_PASSWORD;
-  const authres = await msRestNodeAuth.loginWithUsernamePassword(username!, password!);
-  return authres;
-}
-
 async function addLocalFirewall(client: SqlManagementClient, rg: string, sqlName: string) {
   const response = await axios.get(echoIpAddress);
   const localIp: string = response.data;
@@ -69,10 +61,6 @@ async function addLocalFirewall(client: SqlManagementClient, rg: string, sqlName
     endIpAddress: localIp,
   };
   await client!.firewallRules!.createOrUpdate(rg, sqlName, localRule, model);
-}
-
-async function clearUpLocalFirewall(client: SqlManagementClient, rg: string, sqlName: string) {
-  await client!.firewallRules!.deleteMethod(rg, sqlName, localRule);
 }
 
 async function getSQLConnection(): Promise<Connection> {

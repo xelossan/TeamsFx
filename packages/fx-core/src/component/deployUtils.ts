@@ -18,6 +18,7 @@ import {
 } from "@microsoft/teamsfx-api";
 import { cloneDeep } from "lodash";
 import { Container } from "typedi";
+import { AzureScopes } from "../common";
 import { PluginDisplayName } from "../common/constants";
 import { getDefaultString, getLocalizedString } from "../common/localizeUtils";
 import {
@@ -62,7 +63,7 @@ export class DeployUtils {
       }
     }
     // make sure the user is logged in
-    await azureAccountProvider.getAccountCredentialAsync(true);
+    await azureAccountProvider.getIdentityCredentialAsync(true);
     // verify valid subscription (permission)
     const subscriptions = await azureAccountProvider.listSubscriptions();
     const targetSubInfo = subscriptions.find(
@@ -172,10 +173,9 @@ export class DeployUtils {
     azureAccountProvider: AzureAccountProvider,
     envInfo: v3.EnvInfoV3
   ): Promise<Result<Void, FxError>> {
-    const azureToken = await azureAccountProvider.getAccountCredentialAsync();
-
+    const azureTokenJson = await azureAccountProvider.getJsonObject();
     // Only Azure project requires this confirm dialog
-    const username = (azureToken as any).username || "";
+    const username = (azureTokenJson as any).unique_name || "";
     const subscriptionId = envInfo.state.solution?.subscriptionId || "";
     const subscriptionName = envInfo.state.solution?.subscriptionName || "";
     const msg = getLocalizedString(

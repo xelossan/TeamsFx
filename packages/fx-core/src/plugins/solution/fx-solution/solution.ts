@@ -1995,10 +1995,10 @@ export async function askForProvisionConsent(ctx: SolutionContext): Promise<Resu
     return ok(Void);
   }
 
-  const azureToken = await ctx.azureAccountProvider?.getIdentityCredentialAsync();
+  const azureTokenJson = await ctx.azureAccountProvider?.getJsonObject();
 
   // Only Azure project requires this confirm dialog
-  const username = (azureToken as any).username ? (azureToken as any).username : "";
+  const username = (azureTokenJson as any).unique_name ? (azureTokenJson as any).unique_name : "";
   const subscriptionId = ctx.envInfo.state.get(GLOBAL_CONFIG)?.get(SUBSCRIPTION_ID) as string;
   const subscriptionName = ctx.envInfo.state.get(GLOBAL_CONFIG)?.get(SUBSCRIPTION_NAME) as string;
   const msg = getLocalizedString(

@@ -30,7 +30,7 @@ import { PluginDisplayName } from "../common/constants";
 import { getDefaultString, getLocalizedString } from "../common/localizeUtils";
 import { hasAzureResourceV3 } from "../common/projectSettingsHelperV3";
 import { CustomizeResourceGroupType, TelemetryEvent, TelemetryProperty } from "../common/telemetry";
-import { getHashedEnv } from "../common/tools";
+import { AzureScopes, ConvertTokenToJson, getHashedEnv } from "../common/tools";
 import { convertToAlphanumericOnly } from "../common/utils";
 import { globalVars } from "../core";
 import {
@@ -231,7 +231,7 @@ export class ProvisionUtils {
     }
 
     // make sure the user is logged in
-    await azureAccountProvider.getAccountCredentialAsync(true);
+    await azureAccountProvider.getIdentityCredentialAsync(true);
     // verify valid subscription (permission)
     const subscriptions = await azureAccountProvider.listSubscriptions();
 
@@ -547,10 +547,9 @@ export class ProvisionUtils {
     azureAccountProvider: AzureAccountProvider,
     envInfo: v3.EnvInfoV3
   ): Promise<Result<Void, FxError>> {
-    const azureToken = await azureAccountProvider.getAccountCredentialAsync();
-
+    const azureTokenJson = await azureAccountProvider.getJsonObject();
     // Only Azure project requires this confirm dialog
-    const username = (azureToken as any).username || "";
+    const username = (azureTokenJson as any).unique_name || "";
     const subscriptionId = envInfo.state.solution?.subscriptionId || "";
     const subscriptionName = envInfo.state.solution?.subscriptionName || "";
     const msgNew = getLocalizedString(
@@ -623,8 +622,8 @@ export class ProvisionUtils {
     previousM365TenantId: string,
     previousSubscriptionId?: string
   ): Promise<Result<Void, FxError>> {
-    const azureToken = await azureAccountProvider.getAccountCredentialAsync();
-    const username = (azureToken as any).username || "";
+    const azureTokenJson = await azureAccountProvider.getJsonObject();
+    const username = (azureTokenJson as any).unique_name || "";
     const subscriptionId = envInfo.state.solution?.subscriptionId || "";
     const subscriptionName = envInfo.state.solution?.subscriptionName || "";
     const m365TenantId = envInfo.state.solution?.teamsAppTenantId || "";

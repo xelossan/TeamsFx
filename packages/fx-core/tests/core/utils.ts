@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { TokenCredential } from "@azure/core-auth";
-import { TokenCredentialsBase } from "@azure/ms-rest-nodeauth";
 import {
   AzureAccountProvider,
   AzureSolutionSettings,
@@ -235,8 +234,10 @@ export class MockAzureAccountProvider implements AzureAccountProvider {
     throw new Error("Method not implemented.");
   }
 
-  getJsonObject(showDialog?: boolean): Promise<Record<string, unknown>> {
-    throw new Error("Method not implemented.");
+  async getJsonObject(showDialog?: boolean): Promise<Record<string, unknown>> {
+    return {
+      unique_name: "test",
+    };
   }
 
   listSubscriptions(): Promise<SubscriptionInfo[]> {

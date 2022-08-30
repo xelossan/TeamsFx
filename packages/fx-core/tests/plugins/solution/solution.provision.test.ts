@@ -73,7 +73,6 @@ import { MockedM365Provider, MockedV2Context, validManifest } from "./util";
 import { AppDefinition } from "../../../src/plugins/resource/appstudio/interfaces/appDefinition";
 import _ from "lodash";
 import { AccessToken, GetTokenOptions, TokenCredential } from "@azure/core-auth";
-import { TokenCredentialsBase, UserTokenCredentials } from "@azure/ms-rest-nodeauth";
 import {
   ExportTemplateRequest,
   Provider,
