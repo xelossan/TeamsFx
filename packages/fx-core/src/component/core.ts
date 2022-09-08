@@ -11,6 +11,7 @@ import {
   err,
   FxError,
   InputsWithProjectPath,
+  Json,
   ok,
   Platform,
   ProjectSettingsFileName,
@@ -387,7 +388,14 @@ export class TeamsfxCore {
     // 1. pre provision
     {
       const res = await provisionUtils.preProvision(ctx, inputs);
-      if (res.isErr()) return err(res.error);
+      if (res.isErr()) {
+        if (!res.error.customizedData) {
+          res.error.customizedData = { isPreProvision: true };
+        } else {
+          res.error.customizedData.isPreProvision = true;
+        }
+        return err(res.error);
+      }
     }
     // 2. create a teams app
     const appManifest = Container.get<AppManifest>(ComponentNames.AppManifest);

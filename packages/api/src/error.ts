@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Json } from "./types";
+
 export interface FxError extends Error {
   /**
    * Custom error details.
@@ -16,6 +18,8 @@ export interface FxError extends Error {
   timestamp: Date;
 
   userData?: any;
+
+  customizedData?: Json;
 }
 export interface ErrorOptionBase {
   source?: string;
@@ -61,6 +65,8 @@ export class UserError extends Error implements FxError {
    * message show in the UI
    */
   displayMessage?: string;
+
+  customizedData?: Json;
 
   constructor(opt: UserErrorOptions);
   constructor(source: string, name: string, message: string, displayMessage?: string);
@@ -143,6 +149,8 @@ export class SystemError extends Error implements FxError {
    * message show in the UI
    */
   displayMessage?: string;
+
+  customizedData?: Json;
 
   constructor(opt: SystemErrorOptions);
   constructor(source: string, name: string, message: string, displayMessage?: string);

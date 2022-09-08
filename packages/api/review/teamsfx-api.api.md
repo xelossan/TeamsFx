@@ -820,6 +820,8 @@ export interface FuncValidation<T extends string | string[] | OptionItem | Optio
 
 // @public (undocumented)
 export interface FxError extends Error {
+    // (undocumented)
+    customizedData?: Json;
     innerError?: any;
     source: string;
     timestamp: Date;
@@ -1815,6 +1817,8 @@ export type SubscriptionInfo = {
 export class SystemError extends Error implements FxError {
     constructor(opt: SystemErrorOptions);
     constructor(source: string, name: string, message: string, displayMessage?: string);
+    // (undocumented)
+    customizedData?: Json;
     displayMessage?: string;
     innerError?: any;
     issueLink?: string;
@@ -2035,6 +2039,8 @@ export const UserCancelError: UserError;
 export class UserError extends Error implements FxError {
     constructor(opt: UserErrorOptions);
     constructor(source: string, name: string, message: string, displayMessage?: string);
+    // (undocumented)
+    customizedData?: Json;
     displayMessage?: string;
     helpLink?: string;
     innerError?: any;

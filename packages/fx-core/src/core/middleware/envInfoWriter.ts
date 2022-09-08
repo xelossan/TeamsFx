@@ -45,15 +45,7 @@ export function shouldSkipWriteEnvInfo(
   method: string | undefined,
   res: Result<any, FxError>
 ): boolean {
-  return (
-    res.isErr() &&
-    (res.error.name === "CancelProvision" ||
-      res.error.name === SolutionError.FailedToUpdateAzureParameters ||
-      res.error.name === SolutionError.FailedToBackupFiles ||
-      res.error.name === SolutionError.MissingSubscriptionIdInConfig ||
-      (res.error.name === "UserCancel" &&
-        (method === "provisionResourcesV2" || method === "provisionResourcesV3")))
-  );
+  return res.isErr() && !!res.error.customizedData && !!res.error.customizedData.isPreProvision;
 }
 
 async function writeEnvInfo(ctx: CoreHookContext, skip: boolean) {
