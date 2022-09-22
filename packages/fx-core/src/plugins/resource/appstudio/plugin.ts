@@ -79,7 +79,7 @@ import { getCapabilities, getManifestTemplatePath, loadManifest } from "./manife
 import { environmentManager } from "../../../core/environment";
 import { getDefaultString, getLocalizedString } from "../../../common/localizeUtils";
 import { getProjectTemplatesFolderPath } from "../../../common/utils";
-import { PluginBot } from "../../resource/bot/resources/strings";
+import { PluginBot } from "../../../component/resource/botService/strings";
 import {
   AppStudioScopes,
   getAppDirectory,
