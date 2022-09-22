@@ -4,7 +4,6 @@
 
 export * from "./apim";
 export * from "./appstudio";
-export * from "./bot";
 export * from "./frontend";
 export * from "./function";
 export * from "./identity";
