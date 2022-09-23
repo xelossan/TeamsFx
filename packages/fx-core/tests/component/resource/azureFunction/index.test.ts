@@ -158,7 +158,7 @@ describe("Azure-Function Component", () => {
   it("deploy happy path with bot web app resource id", async function () {
     sandbox.stub(fs, "pathExists").resolves(true);
     const restartWebAppStub = sandbox.stub(AzureOperations, "restartWebApp").resolves();
-    sandbox.stub(botUtils, "zipFolderAsync").resolves({} as any);
+    sandbox.stub(utils, "zipFolderAsync").resolves({} as any);
     sandbox.stub(hostingUtils, "azureWebSiteDeploy").resolves({} as any);
     assign(inputs, {
       componentId: ComponentNames.TeamsBot,
@@ -184,7 +184,7 @@ describe("Azure-Function Component", () => {
   it("deploy happy path with output resource id", async function () {
     sandbox.stub(fs, "pathExists").resolves(true);
     const restartWebAppStub = sandbox.stub(AzureOperations, "restartWebApp").resolves();
-    sandbox.stub(botUtils, "zipFolderAsync").resolves({} as any);
+    sandbox.stub(utils, "zipFolderAsync").resolves({} as any);
     sandbox.stub(hostingUtils, "azureWebSiteDeploy").resolves({} as any);
     assign(inputs, {
       componentId: ComponentNames.TeamsBot,
@@ -209,8 +209,8 @@ describe("Azure-Function Component", () => {
 
   it("deploy bot precondition error", async function () {
     sandbox.stub(fs, "pathExists").resolves(true);
-    const restartWebAppStub = sandbox.stub(AzureOperations, "restartWebApp").resolves();
-    sandbox.stub(botUtils, "zipFolderAsync").resolves({} as any);
+    sandbox.stub(AzureOperations, "restartWebApp").resolves();
+    sandbox.stub(utils, "zipFolderAsync").resolves({} as any);
     sandbox.stub(hostingUtils, "azureWebSiteDeploy").resolves({} as any);
     assign(inputs, {
       componentId: ComponentNames.TeamsBot,
