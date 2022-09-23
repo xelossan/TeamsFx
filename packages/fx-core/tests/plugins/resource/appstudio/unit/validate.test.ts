@@ -7,8 +7,7 @@ import sinon from "sinon";
 import { v4 as uuid } from "uuid";
 import { AppStudioPlugin } from "./../../../../../src/plugins/resource/appstudio";
 import { AppStudioPluginImpl } from "./../../../../../src/plugins/resource/appstudio/plugin";
-import { TeamsBot } from "./../../../../../src/plugins/resource/bot";
-import { ConfigMap, PluginContext, ok, Plugin, ManifestUtil } from "@microsoft/teamsfx-api";
+import { ConfigMap, PluginContext, ManifestUtil } from "@microsoft/teamsfx-api";
 import { newEnvInfo } from "../../../../../src/core/environment";
 import { LocalCrypto } from "../../../../../src/core/crypto";
 import { getAzureProjectRoot } from "./../helper";
@@ -16,8 +15,6 @@ import { getAzureProjectRoot } from "./../helper";
 describe("validate manifest", () => {
   let plugin: AppStudioPlugin;
   let ctx: PluginContext;
-  let BotPlugin: Plugin;
-  let selectedPlugins: Plugin[];
 
   beforeEach(async () => {
     plugin = new AppStudioPlugin();
@@ -27,12 +24,6 @@ describe("validate manifest", () => {
       config: new ConfigMap(),
       cryptoProvider: new LocalCrypto(""),
     };
-
-    const botplugin: Plugin = new TeamsBot();
-    BotPlugin = botplugin as Plugin;
-    BotPlugin.name = "fx-resource-bot";
-    BotPlugin.displayName = "Bot";
-    selectedPlugins = [BotPlugin];
 
     sinon.stub(AppStudioPluginImpl.prototype, "getConfigForCreatingManifest" as any).returns({
       tabEndpoint: "https://tabEndpoint",

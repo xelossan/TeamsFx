@@ -5,19 +5,9 @@ import "mocha";
 import * as chai from "chai";
 import fs from "fs-extra";
 import sinon from "sinon";
-import {
-  ConfigMap,
-  PluginContext,
-  TeamsAppManifest,
-  Plugin,
-  ok,
-  Platform,
-  LocalSettings,
-} from "@microsoft/teamsfx-api";
+import { ConfigMap, PluginContext, Platform, LocalSettings } from "@microsoft/teamsfx-api";
 import { AppStudioPlugin } from "./../../../../../src/plugins/resource/appstudio";
-import { AppStudioClient } from "./../../../../../src/plugins/resource/appstudio/appStudio";
 import { AppStudioPluginImpl } from "./../../../../../src/plugins/resource/appstudio/plugin";
-import { TeamsBot } from "./../../../../../src/plugins/resource/bot";
 import AdmZip from "adm-zip";
 import { newEnvInfo } from "../../../../../src/core/environment";
 import { LocalCrypto } from "../../../../../src/core/crypto";
@@ -28,8 +18,6 @@ describe("Build Teams Package", () => {
   let plugin: AppStudioPlugin;
   let ctx: PluginContext;
   let localSettings: LocalSettings;
-  let BotPlugin: Plugin;
-  let selectedPlugins: Plugin[];
   const sandbox = sinon.createSandbox();
 
   beforeEach(async () => {
@@ -51,11 +39,6 @@ describe("Build Teams Package", () => {
         activeResourcePlugins: ["fx-resource-bot"],
       },
     };
-    const botplugin: Plugin = new TeamsBot();
-    BotPlugin = botplugin as Plugin;
-    BotPlugin.name = "fx-resource-bot";
-    BotPlugin.displayName = "Bot";
-    selectedPlugins = [BotPlugin];
   });
 
   afterEach(() => {

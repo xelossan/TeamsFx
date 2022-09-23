@@ -14,7 +14,6 @@ import { AppStudioClient } from "./../../../../../src/plugins/resource/appstudio
 import { PublishingState } from "./../../../../../src/plugins/resource/appstudio/interfaces/IPublishingAppDefinition";
 import { AppDefinition } from "./../../../../../src/plugins/resource/appstudio/interfaces/appDefinition";
 import { getAzureProjectRoot, MockUserInteraction } from "./../helper";
-import { TeamsBot } from "./../../../../../src/plugins/resource/bot";
 import { LocalCrypto } from "../../../../../src/core/crypto";
 import { Constants } from "../../../../../src/plugins/resource/appstudio/constants";
 import { newEnvInfo } from "../../../../../src/core/environment";
@@ -23,8 +22,6 @@ import { mockTokenProviderM365 } from "../../../../component/resource/aadApp/hel
 describe("Publish Teams app with Azure", () => {
   let plugin: AppStudioPlugin;
   let ctx: PluginContext;
-  let BotPlugin: Plugin;
-  let selectedPlugins: Plugin[];
   const sandbox = sinon.createSandbox();
   const appPackagePath = path.resolve(__dirname, "./../resources/appPackage/appPackage.zip");
   const appDef: AppDefinition = {
@@ -54,11 +51,6 @@ describe("Publish Teams app with Azure", () => {
       },
     };
 
-    const botplugin: Plugin = new TeamsBot();
-    BotPlugin = botplugin as Plugin;
-    BotPlugin.name = "fx-resource-bot";
-    BotPlugin.displayName = "Bot";
-    selectedPlugins = [BotPlugin];
     sandbox.stub(AppStudioClient, "publishTeamsApp").resolves(uuid());
     sandbox.stub(AppStudioClient, "publishTeamsAppUpdate").resolves(uuid());
     sandbox.stub(AppStudioClient, "importApp").resolves(appDef);
@@ -142,8 +134,6 @@ describe("Publish Teams app with Azure", () => {
 describe("Publish Teams app with SPFx", () => {
   let plugin: AppStudioPlugin;
   let ctx: PluginContext;
-  let BotPlugin: Plugin;
-  let selectedPlugins: Plugin[];
   const sandbox = sinon.createSandbox();
   const appPackagePath = path.resolve(__dirname, "./../spfx-resources/appPackage/appPackage.zip");
 
