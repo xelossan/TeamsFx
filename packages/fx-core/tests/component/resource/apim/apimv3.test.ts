@@ -21,8 +21,8 @@ import {
   MockedAzureAccountProvider,
   MockedM365Provider,
   MockedV2Context,
-} from "../../solution/util";
-import { getQuestionsForDeployAPIM } from "../../../../src/component/resource/apim";
+} from "../../../plugins/solution/util";
+import { getQuestionsForDeployAPIM } from "../../../../src/component/resource/apim/apim";
 describe("APIM V3 API", () => {
   it("getQuestionsForDeploy", async () => {
     const projectSettings: ProjectSettings = {

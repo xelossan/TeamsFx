@@ -22,7 +22,7 @@
     "test:identity": "nyc mocha \"tests/plugins/resource/identity/**/*.test.ts\"",
     "test:appmanifest": "nyc mocha \"tests/component/resource/appmanifest/**/*.test.ts\"",
     "test:spfx": "nyc mocha \"tests/plugins/resource/spfx/**/*.test.ts\"",
-    "test:apim": "nyc mocha \"tests/plugins/resource/apim/**/*.test.ts\"",
+    "test:apim": "nyc mocha \"tests/component/resource/apim/**/*.test.ts\"",
     "test:keyvault": "nyc mocha \"tests/plugins/resource/keyvault/**/*.test.ts\"",
     "test:apiconnector": "nyc mocha \"tests/component/feature/apiconnector/**/*.test.ts\"",
     "test:unit": "nyc mocha \"tests/**/*.test.ts\" ",

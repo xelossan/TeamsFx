@@ -15,7 +15,6 @@ export const ResourcePlugins = {
   IdentityPlugin: "IdentityPlugin",
   FunctionPlugin: "FunctionPlugin",
   LocalDebugPlugin: "LocalDebugPlugin",
-  ApimPlugin: "ApimPlugin",
 };
 
 export const ResourcePluginsV2 = {
@@ -23,7 +22,6 @@ export const ResourcePluginsV2 = {
   IdentityPlugin: "IdentityPluginV2",
   FunctionPlugin: "FunctionPluginV2",
   LocalDebugPlugin: "LocalDebugPluginV2",
-  ApimPlugin: "ApimPluginV2",
 };
 
 /**

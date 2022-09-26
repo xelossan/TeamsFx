@@ -222,5 +222,6 @@ export async function getQuestionsForDeployAPIM(
     context.envInfo as v3.EnvInfoV3,
     apimConfig
   );
-  return ok(node);
+
+  return ok(undefined);
 }

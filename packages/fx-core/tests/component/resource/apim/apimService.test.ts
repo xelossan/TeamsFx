@@ -23,12 +23,11 @@ import {
   mockCredential,
   MockTokenCredentials,
 } from "./mock";
-import { createCipheriv } from "crypto";
 
 dotenv.config();
 chai.use(chaiAsPromised);
 
-const UT_TEST_DATA_FOLDER = "./tests/plugins/resource/apim/data/apimService";
+const UT_TEST_DATA_FOLDER = "./tests/component/resource/apim/data/apimService";
 
 describe("ApimService", () => {
   describe("#getService()", () => {
